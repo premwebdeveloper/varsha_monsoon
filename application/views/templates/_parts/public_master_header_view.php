@@ -193,10 +193,6 @@
                                     </li>
 
                                     <li class="full-width">
-                                        <a href="<?= base_url('Blog'); ?>">Blog</a>
-                                    </li>
-
-                                    <li class="full-width">
                                         <a href="<?= base_url('Product'); ?>">Product</a>
                                     </li>
 
@@ -209,7 +205,6 @@
                                         <div class="submenu">
                                             <ul class="simple-menu-list-column">
                                                 <li><a href="<?= base_url('About'); ?>"><i class="fa fa-angle-right"></i>About</a></li>
-                                                <li><a href="<?= base_url('About/terms'); ?>"><i class="fa fa-angle-right"></i>How It Works</a></li>
 												<li><a href="<?= base_url('About/terms'); ?>"><i class="fa fa-angle-right"></i>Terms & Condition</a></li>
                                                 <li><a href="<?= base_url('About/faq'); ?>"><i class="fa fa-angle-right"></i>Faq</a></li>
                                                 <li><a href="<?= base_url('About/returns'); ?>"><i class="fa fa-angle-right"></i>Returns</a></li>

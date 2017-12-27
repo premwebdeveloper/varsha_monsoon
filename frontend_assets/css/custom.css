@@ -1,0 +1,159 @@
+.category_highlight{
+    padding: 0 10px 0 10px;
+    font-weight: 600;
+    color: #0F51A3 !important;
+    font-style: italic;
+}
+.p0{
+    padding:0px;
+}.p5{
+	padding:5px;
+}
+.p10{
+    padding:10px;
+}
+.p15{
+	padding:15px;
+}
+.p20{
+	padding:20px;
+}
+.p30{
+	padding:30px;
+}
+.pt10{
+    padding-top:10px;
+}
+.pt15{
+	padding-top:15px;
+}
+.pt20{
+	padding-top:20px;
+}
+.pt25{
+    padding-top:25px;
+}
+.pt30{
+	padding-top:30px;
+}
+.pb10{
+    padding-bottom: 10px;
+}
+.pb20{
+    padding-bottom: 20px;
+}
+.pb30{
+    padding-bottom: 30px;
+}
+.pb70{
+    padding-bottom: 70px;
+}
+.pr0{
+    padding-right: 0px;
+}
+.mb10{
+    margin-bottom: 10px;
+}
+.mt-8{
+    margin-top: -8px;
+}
+.mt8{
+    margin-top: 8px;
+}
+.display_none
+{
+    display:none;
+}
+.button.style-10, .button.style-12, .button.style-18 {
+    font-size: 14px; line-height: 10px; padding: 11px 15px; text-transform: uppercase; font-weight: 700; color: #fff;
+    border: 2px #262626 solid; background: #262626; letter-spacing: 2px;
+}
+.style_border{
+    border: 1px #e6e6e6 solid;
+}
+.text_bold{
+    font-weight: 600 !important;
+}
+.blue_color{
+    color:#0F51A3 !important;
+}
+.yellow{
+    color:#E9B500 !important;
+}
+.mb20
+{
+    margin-bottom: 20px !important;
+}
+.custom_label
+{
+    display: inline;padding: 2px;background: #0F51A3;color: #ffffff;font-size: 12px;border-radius: 4px;
+}
+.custom_modal_header
+{
+    background: #0F51A3 !important;color: white;font-weight: bold;
+}
+.custom_modal_header > button
+{
+    color: #ffffff;
+    opacity:1;
+}
+.btn-yellow {
+    color: #fff;
+    background-color: #E9B500;
+    border-color: #E9B500;
+}
+.btn-blue {
+    color: #fff;
+    background-color: #0F51A3;
+    border-color: #0F51A3;
+}
+.required-label:after {
+  content:"*";
+  color:red;
+  font-weight: bold;
+  font-size: 18px;
+}
+.red
+{
+    color: red;
+}
+.information-entry{
+    margin-top: -14px;
+}
+
+.scrollbar {
+    max-height:245px;
+    width: 270px;
+    overflow-y:auto;
+    padding-right: 10px;
+}
+
+
+/* Mobile Responsive */
+
+/* Tablets (>=768px)*/
+@media (max-width: 991px) {
+
+}
+
+/*Phones (<768px)*/
+@media (max-width: 767px) {
+    .text_right{
+        right: 15px;
+    }
+    .pt68{
+        padding-top: 68px;
+    }
+    .t_space{
+        top: 25px;
+    }
+    .un_active{
+        display: none;
+    }
+    .min_height{
+        min-height: 77px;
+    }
+}
+@media (max-width: 480px) {
+
+}

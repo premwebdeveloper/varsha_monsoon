@@ -53,6 +53,12 @@
 			</li>
 
 			<li>
+				<a href="<?= site_url('Products'); ?>"><i class="fa fa-outdent"></i>
+					<span class="nav-label">Products</span>
+				</a>
+			</li>
+
+			<li>
 				<a href="<?= site_url('Admin/food_category'); ?>"><i class="fa fa-outdent"></i>
 					<span class="nav-label">Food Categories</span>
 				</a>

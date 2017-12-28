@@ -9,7 +9,6 @@ Class Admin extends Auth_Controller
         parent::__construct();
         $this->load->Model('Product_Model');
         $this->load->Model('Admin_Model');
-        $this->load->Model('Blog_Model');
     }
 
     //Get Food Types for admin

@@ -189,7 +189,7 @@
     // Scripts for charts on dashboard || Notification on page reload || Or else
     $(document).ready(function() {
 
-        setTimeout(function() {
+        /*setTimeout(function() {
             toastr.options = {
                 closeButton: true,
                 progressBar: true,
@@ -198,7 +198,7 @@
             };
             toastr.success('Welcome to Khao SAA');
 
-        }, 1300);
+        }, 1300);*/
 
        var data1 = [
             [0,4],[1,8],[2,5],[3,10],[4,4],[5,16],[6,5],[7,11],[8,6],[9,11],[10,30],[11,10],[12,13],[13,4],[14,3],[15,3],[16,6]

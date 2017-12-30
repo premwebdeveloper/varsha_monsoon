@@ -8,7 +8,7 @@ class Products_Model extends CI_Model
         parent::__construct();
     }
 
-    public function index()
+    public function index($product_id = null)
     {
         $this->db->select('prod.*, cat.category, brand.brand');
 
@@ -19,6 +19,38 @@ class Products_Model extends CI_Model
         $this->db->join('brands brand', 'brand.id = prod.brand_id');
 
         $this->db->where('prod.status', '1');
+
+        if(!empty($product_id))
+        {
+            $this->db->where('prod.id', $product_id);
+        }
+
+        $this->db->where('prod.status', '1');
+
+        $query = $this->db->get();
+
+        if(!empty($product_id))
+        {
+            $result = $query->row_array();
+        }
+        else
+        {
+            $result = $query->result_array();
+        }
+
+        return $result;
+    }
+
+    // Get Product Images
+    public function getProductImages($product_id)
+    {
+        $this->db->select('*');
+
+        $this->db->from('product_images');
+
+        $where = array('status' => '1', 'product_id' => $product_id);
+
+        $this->db->where($where);
 
         $query = $this->db->get();
 
@@ -53,13 +85,36 @@ class Products_Model extends CI_Model
 
         $this->db->trans_complete();
 
+        return $insert_id;
+    }
+
+    // Insert product images
+    public function addProductImage($insert_id, $image)
+    {
+        $date = date('Y-m-d H:i:s');
+
+        $this->db->trans_start();
+
+        $data = array(
+            'product_id'   => $insert_id,
+            'image'        => $image,
+            'created_date' => $date,
+            'updated_date' => $date,
+            'status'       => 1,
+        );
+
+        $this->db->insert('product_images', $data);
+
+        $this->db->trans_complete();
+
         return true;
     }
 
     // Delete user address
     public function deleteProduct($product_id)
     {
-         $data = array(
+        // Update product status  = 0
+        $data = array(
             'status' => 0
         );
 
@@ -67,6 +122,13 @@ class Products_Model extends CI_Model
 
         # update Users_details
         $this->db->update('products', $data);
+
+        // Update product image status = 0
+
+        $this->db->where('product_id', $product_id);
+
+        # update Users_details
+        $this->db->update('product_images', $data);
 
         return true;
     }

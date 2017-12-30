@@ -115,15 +115,15 @@ class Products extends Auth_Controller {
                         $i++;
                     }
 
-                    $add = $this->Products_Model->add_product($product);
+                    $insert_id = $this->Products_Model->add_product($product);
 
                     // Upload all images
-                    /*foreach($product_images as $image)
+                    foreach($product_images as $image)
                     {
+                        $add_image = $this->Products_Model->addProductImage($insert_id, $image);
+                    }
 
-                    }*/
-
-                    if($add)
+                    if($add_image)
                     {
                         $this->session->set_flashdata('message', 'Product added successfully.');
                     }
@@ -143,6 +143,33 @@ class Products extends Auth_Controller {
         $this->data['categories'] = $categories = $this->Categories_Model->index();
 
         $this->render('products/insert');
+    }
+
+    // View product Details
+    public function view()
+    {
+        // Add breadcrumbs
+        $this->breadcrumbs->push('Home', 'Dashboard');
+        $this->breadcrumbs->push('Products', 'Products/index');
+        $this->breadcrumbs->push('Product Detail', 'view');
+
+        $this->data['page_description'] = 'Products';
+
+        $product_id = $this->uri->segment(3);
+
+        $this->data['product'] = $product = $this->Products_Model->index($product_id);
+
+        $this->data['productImages'] = $productImages = $this->Products_Model->getProductImages($product_id);
+
+        $this->render('products/view');
+    }
+
+    // View product Details
+    public function edit()
+    {
+        echo $product_id = $this->uri->segment(3);
+        exit;
+        $this->render('products/edit');
     }
 
     // Delete user address

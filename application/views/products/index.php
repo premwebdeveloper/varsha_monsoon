@@ -81,6 +81,15 @@
                                     <td><?= $product['brand']; ?></td>
                                     <td><?= $product['category']; ?></td>
                                     <td class="center">
+
+                                        <a href="<?= site_url('Products/view/'.$product['id']); ?>" class="custom-btn btn-success dim delete_product" data-toggle="tooltip" title="View" data-placement="top">
+                                            <i class="fa fa-eye" aria-hidden="true"></i>
+                                        </a>
+
+                                        <a href="<?= site_url('Products/edit/'.$product['id']); ?>" class="custom-btn btn-warning dim delete_product" data-toggle="tooltip" title="Edit" data-placement="top">
+                                            <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                                        </a>
+
                                         <a class="custom-btn btn-danger dim delete_product" data-id='<?= $product['id']; ?>' title="Are You Sure ?"
                                             data-toggle="delete_product" data-singleton="true" data-placement="top" data-popout="true" data-btn-ok-label="Yes" data-btn-ok-icon="fa fa-check" data-btn-ok-class="custom-btn btn-success dim delete_product confrm" data-btn-cancel-label="No" data-btn-cancel-icon="fa fa-times" data-btn-cancel-class="custom-btn btn-warning dim delete_product confrm">
 

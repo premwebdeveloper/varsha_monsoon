@@ -46,13 +46,13 @@
             <div class="header-wrapper style-1">
                 <header class="type-1">
                     <div class="header-top">
-                        <div class="header-top-entry">
+                        <!-- <div class="header-top-entry">
                             <div class="title"><b>Currency:</b> $ USD<i class="fa fa-caret-down"></i></div>
                             <div class="list">
                                 <a href="#" class="list-entry">$ CAD</a>
                                 <a href="#" class="list-entry">₹ INR</a>
                             </div>
-                        </div>
+                        </div> -->
                         <div class="header-top-entry hidden-xs">
                             <div class="title"><i class="fa fa-phone"></i>Any question? Call Us <a href="tel:+987123654"><b>+987 123 654</b></a></div>
                         </div>

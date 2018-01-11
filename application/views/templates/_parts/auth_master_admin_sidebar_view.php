@@ -28,11 +28,11 @@
 				</a>
 			</li>
 
-			<li>
+			<!-- <li>
 				<a href="<?= site_url('User'); ?>"><i class="fa fa-group"></i>
 					<span class="nav-label">Users</span>
 				</a>
-			</li>
+			</li> -->
 
 			<li>
 				<a href="<?= site_url('Brands'); ?>"><i class="fa fa-outdent"></i>
@@ -59,16 +59,22 @@
 			</li>
 
 			<li>
-				<a href="<?= site_url('Admin/food_category'); ?>"><i class="fa fa-outdent"></i>
-					<span class="nav-label">Food Categories</span>
+				<a href="<?= site_url('Admin/slider'); ?>"><i class="fa fa-outdent"></i>
+					<span class="nav-label">Slider</span>
 				</a>
 			</li>
 
 			<li>
+				<a href="<?= site_url('Admin/offer'); ?>"><i class="fa fa-outdent"></i>
+					<span class="nav-label">Offers</span>
+				</a>
+			</li>
+
+			<!--<li>
 				<a href="<?= site_url('Food_Listings'); ?>"><i class="fa fa-bars"></i>
 					<span class="nav-label">Food Listings</span>
 				</a>
-			</li>
+			</li> -->
 
 		</ul>
 

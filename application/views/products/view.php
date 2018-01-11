@@ -15,6 +15,9 @@
                 <div class="widget-head-color-box navy-bg p-lg" style="padding: 20px;margin-top: 0px;">
                     <h3><strong> <?= $product['name']; ?> </strong></h3>
                 </div>
+
+                <img src="<?= base_url(); ?>uploads/products/<?= $productImages[0]['image']; ?>" style="width:100%;height:250px;">
+
                 <div class="ibox-content profile-content">
                     <h4><strong> SKU Code : <?= $product['sku_code']; ?></strong></h4>
                     <h4><strong> Price 1 ( <i class="fa fa-inr" aria-hidden="true"></i> ) : <?= $product['price1']; ?></strong></h4>

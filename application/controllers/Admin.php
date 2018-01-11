@@ -7,58 +7,154 @@ Class Admin extends Auth_Controller
     function __construct()
     {
         parent::__construct();
-        $this->load->Model('Product_Model');
+        //$this->load->Model('Product_Model');
         $this->load->Model('Admin_Model');
     }
 
-    //Get Food Types for admin
-    public function food_category()
+    // View All Slider
+    public function slider()
     {
         // Add breadcrumbs
         $this->breadcrumbs->push('Home', 'Dashborad');
-        $this->breadcrumbs->push('Food Categories', 'Admin/food_category');
+        $this->breadcrumbs->push('Sliders', 'Admin/slider');
 
-        //$this->data['page_description'] = 'All Product';
+        $this->data['page_description'] = 'Sliders';
 
-        $this->data['food_category'] = $food_category = $this->Product_Model->product_category();
+        $this->data['sliders'] = $sliders = $this->Admin_Model->slider();
 
-        $this->render('admin_user/food_category');
+        $this->render('admin_user/slider');
     }
 
-    //Add Food Type
-    public function add_food_category()
+    public function addSlider()
     {
         // Add breadcrumbs
         $this->breadcrumbs->push('Home', 'Dashboard');
-        $this->breadcrumbs->push('Categories', 'Admin/food_category');
-        $this->breadcrumbs->push('Add Category', 'Admin/add_food_category');
+        $this->breadcrumbs->push('Sliders', 'Admin/slider');
+        $this->breadcrumbs->push('Add Slider', 'Admin/addSlider');
+
+        $slider = array();
+
+        if($this->input->post())
+        {
+            $slider['title'] = $title = $this->input->post("title");
+            $slider['description'] = $description = $this->input->post("description");
+
+            if(!empty($_FILES['image']['name']))
+            {
+                $path = "uploads/slider";
+
+                if(!file_exists($path))
+                {
+                    mkdir($path, 0777, true);
+                }
+
+                $config['upload_path']   = $path;
+                $config['allowed_types'] = 'bmp|jpg|png|jpeg';
+                $config['max_size']      = 8000;
+
+                // Set upload library
+                $this->load->library('upload', $config);
+
+                if ( ! $this->upload->do_upload('image'))
+                {
+                    $upload_error = array('error' => $this->upload->display_errors());
+                    $_SESSION['message'] = $upload_error['error'];
+                    $this->session->mark_as_flash('message');
+
+                    redirect('Admin/addSlider');
+                }
+                else
+                {
+                    $success = $this->upload->data();
+                    $slider['image'] = $image = $success['file_name'];
+
+                    $addSlider = $this->Admin_Model->addSlider($slider);
+
+                    $_SESSION['message'] = 'Slider Added Successfully.';
+
+                    $this->session->mark_as_flash('message');
+
+                    redirect('Admin/slider');
+                }
+            }
+            else
+            {
+                $_SESSION['message'] = 'Please upload slider Image';
+
+                $this->session->mark_as_flash('message');
+
+                redirect('Admin/addSlider');
+            }
+        }
+
+        $this->render('admin_user/addSlider');
+    }
+
+    // Delete Slider
+    public function removeSlider()
+    {
+        $slider_id = $this->uri->segment(3);
+
+        $removeSlider = $this->Admin_Model->removeSlider($slider_id);
+
+        if($removeSlider)
+        {
+            $_SESSION['message'] = 'Slider deleted successfully.';
+
+            $this->session->mark_as_flash('message');
+
+            redirect('Admin/slider');
+        }
+    }
+
+    // View All Offer
+    public function offer()
+    {
+        // Add breadcrumbs
+        $this->breadcrumbs->push('Home', 'Dashborad');
+        $this->breadcrumbs->push('Offers', 'Admin/offer');
+
+        $this->data['page_description'] = 'Offers';
+
+        $this->data['offers'] = $offers = $this->Admin_Model->offer();
+
+        $this->render('admin_user/offer');
+    }
+
+    // Add Offer
+    public function addOffer()
+    {
+        // Add breadcrumbs
+        $this->breadcrumbs->push('Home', 'Dashboard');
+        $this->breadcrumbs->push('Offers', 'Admin/offer');
+        $this->breadcrumbs->push('Add Offer', 'Admin/addOffer');
+
+        $offer = array();
 
         if($this->input->post())
         {
             $this->load->library('form_validation');
-            $this->form_validation->set_rules('type_category','Category', 'trim|required');
-            $this->form_validation->set_rules('type','Type', 'trim|required');
-            $this->form_validation->set_rules('desc','Description', 'trim|required');
+            $this->form_validation->set_rules('title','Title', 'trim|required');
+            $this->form_validation->set_rules('price','Category', 'trim|required');
 
             if($this->form_validation->run() == TRUE)
             {
-                $desc = $this->input->post("desc");
-                $type = $this->input->post("type");
-                $type_category = $this->input->post("type_category");
-                //Check Image is Upload or not
+                $offer['title'] = $title = $this->input->post("title");
+                $offer['price'] = $price = $this->input->post("price");
+                $offer['description'] = $description = $this->input->post("description");
 
                 if(!empty($_FILES['image']['name']))
                 {
-                    $path = "uploads/food_category";
+                    $path = "uploads/offer";
 
                     if(!file_exists($path))
                     {
                         mkdir($path, 0777, true);
                     }
 
-                    $config['upload_path'] = $path;
-                    $config['allowed_types']        = 'bmp|jpg|png|jpeg';
-                    $config['max_size']             = 512;
+                    $config['upload_path']   = $path;
+                    $config['allowed_types'] = 'bmp|jpg|png|jpeg';
+                    $config['max_size']      = 8000;
 
                     // Set upload library
                     $this->load->library('upload', $config);
@@ -68,51 +164,57 @@ Class Admin extends Auth_Controller
                         $upload_error = array('error' => $this->upload->display_errors());
                         $_SESSION['message'] = $upload_error['error'];
                         $this->session->mark_as_flash('message');
-                        $redirect_to = str_replace(base_url(),'',$_SERVER['HTTP_REFERER']);
-                        redirect($redirect_to);
+
+                        redirect('Admin/addOffer');
                     }
                     else
                     {
                         $success = $this->upload->data();
-                        $image = $success['file_name'];
+                        $offer['image'] = $image = $success['file_name'];
 
-                        // Crop Image Size
-                        $configer =  array(
-                          'image_library'   => 'gd2',
-                          'source_image'    =>  $success['full_path'],
-                          'maintain_ratio'  =>  TRUE,
-                          'quality'         =>  '100%',
-                          'width'           =>  600,
-                          'height'          =>  500,
-                        );
-                        $this->image_lib->clear();
-                        $this->image_lib->initialize($configer);
-                        $this->image_lib->resize();
+                        $addOffer = $this->Admin_Model->addOffer($offer);
+
+                        $_SESSION['message'] = 'Offer Added Successfully.';
+
+                        $this->session->mark_as_flash('message');
+
+                        redirect('Admin/offer');
                     }
                 }
                 else
                 {
-                    $redirect_to = str_replace(base_url(),'',$_SERVER['HTTP_REFERER']);
-                    redirect($redirect_to);
+                    $_SESSION['message'] = 'Please upload offer Image';
+
+                    $this->session->mark_as_flash('message');
+
+                    redirect('Admin/addOffer');
                 }
-
-                //Add Food Type
-                $add_type = $this->Admin_Model->add_food_category($desc, $type, $type_category, $image);
-
-                $_SESSION['message'] = 'Food Type Added Successfully.';
-
-                $this->session->mark_as_flash('message');
-
-                redirect('Admin/food_category');
-
-            }
-            else
-            {
-                $this->render('admin_user/add_food_category');
             }
         }
-        $this->render('admin_user/add_food_category');
+
+        $this->render('admin_user/addOffer');
     }
+
+    // Delete Offer
+    public function removeOffer()
+    {
+        $offer_id = $this->uri->segment(3);
+
+        $removeOffer = $this->Admin_Model->removeOffer($offer_id);
+
+        if($removeOffer)
+        {
+            $_SESSION['message'] = 'Offer deleted successfully.';
+
+            $this->session->mark_as_flash('message');
+
+            redirect('Admin/offer');
+        }
+    }
+
+
+    //Add Food Type
+    /*
 
     //Edit Food Type
     public function edit_food_category()
@@ -455,5 +557,5 @@ Class Admin extends Auth_Controller
         $this->session->set_flashdata('message', 'Blog Deleted Successfully.');
 
         redirect("Admin/blogs");
-    }
+    }*/
 }

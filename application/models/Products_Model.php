@@ -88,6 +88,33 @@ class Products_Model extends CI_Model
         return $insert_id;
     }
 
+    // Delete user address
+    public function editProduct($product)
+    {
+        $date = date('Y-m-d H:i:s');
+
+        $this->db->trans_start();
+
+        $data = array(
+            'brand_id'     => $product['brand'],
+            'category_id'  => $product['category'],
+            'name'         => $product['name'],
+            'sku_code'     => $product['sku_code'],
+            'price1'       => $product['price1'],
+            'price2'       => $product['price2'],
+            'description'  => $product['description'],
+            'updated_date' => $date,
+        );
+
+        $this->db->where('id', $product['product_id']);
+
+        $this->db->update('products', $data);
+
+        $this->db->trans_complete();
+
+        return true;
+    }
+
     // Insert product images
     public function addProductImage($insert_id, $image)
     {
@@ -110,7 +137,7 @@ class Products_Model extends CI_Model
         return true;
     }
 
-    // Delete user address
+    // Delete Product
     public function deleteProduct($product_id)
     {
         // Update product status  = 0
@@ -129,6 +156,16 @@ class Products_Model extends CI_Model
 
         # update Users_details
         $this->db->update('product_images', $data);
+
+        return true;
+    }
+
+    // Delete product Image
+    public function deleteImage($image_id)
+    {
+        $this->db->where('id', $image_id);
+
+        $this->db->delete('product_images');
 
         return true;
     }

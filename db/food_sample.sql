@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 29, 2017 at 10:46 AM
+-- Generation Time: Jan 11, 2018 at 05:59 PM
 -- Server version: 10.1.10-MariaDB
 -- PHP Version: 5.6.15
 
@@ -119,39 +119,6 @@ INSERT INTO `categories` (`id`, `category`, `status`) VALUES
 (2, 'cat 2', 1),
 (3, 'cat 3', 1),
 (4, 'cat 4', 1);
-
--- --------------------------------------------------------
-
---
--- Table structure for table `food_category`
---
-
-CREATE TABLE `food_category` (
-  `id` int(11) NOT NULL,
-  `food_type` int(11) NOT NULL,
-  `food_category` varchar(255) NOT NULL,
-  `description` text NOT NULL,
-  `image` varchar(100) DEFAULT NULL,
-  `created_on` date NOT NULL,
-  `updated_on` date NOT NULL,
-  `status` tinyint(1) NOT NULL DEFAULT '1'
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `food_category`
---
-
-INSERT INTO `food_category` (`id`, `food_type`, `food_category`, `description`, `image`, `created_on`, `updated_on`, `status`) VALUES
-(1, 1, 'Paneer', 'Palak Paneer\r\nMutter Paneer\r\nMakhni Paneer\r\nPaneer Aloo\r\nPaneer Kofta\r\nPaneer with Onion and Tomato \r\nGreen Pepper Paneer ', 'paneer.jpg', '2017-10-10', '2017-10-10', 1),
-(2, 1, 'South Indian', 'Masala Dosa \r\nPlain Dosa\r\nIddly\r\nUpma\r\nFry Rice\r\nSambar\r\nRasam', 'southindian.jpg', '2017-10-10', '2017-10-10', 1),
-(3, 1, 'Indian Chinese', 'Mixed vegetable fried Rice\r\nMixed vegetable noodles\r\nVegetable Manchurian \r\nVegetable sweet corn soup\r\nVegetable Hot\r\nand Sour soup\r\nDry Spicy mixed vegetables\r\nSoya balls with Spicy mixed masala\r\nSweet and sour vegetable\r\nChilly Paneer\r\n', 'indianchinese.jpg', '2017-10-10', '2017-10-10', 1),
-(4, 1, 'Sweet Dishes', 'Kheer \r\nFruit Custard\r\nShahi Tukra\r\nSuji Halwa\r\nMixed fruit cream\r\nRabri\r\nGajar Halwa\r\nBesan Halwa\r\nKulfi\r\n', 'sweetdises.jpg', '2017-10-10', '2017-10-10', 1),
-(5, 1, 'Parathas', 'Plain Paratha\r\nAloo Paratha \r\nGobi Paratha\r\nMooli Paratha \r\nOnion Paratha\r\nPaneer Paratha\r\nMasala Paratha\r\nPeas Paratha\r\n\r\n\r\n', 'parathas.jpg', '2017-10-10', '2017-10-10', 1),
-(6, 1, 'Rolls', 'Veg. Roll\r\nPanner Roll\r\nEgg Roll\r\nChicken Roll\r\nEgg Chicken Roll', 'rolls.jpg', '2017-10-10', '2017-10-10', 1),
-(7, 1, 'Thalies', 'Plain Thalie\r\nSpecial Thali', 'Thalies.jpg', '2017-10-10', '2017-11-09', 1),
-(8, 2, 'Biriyani', 'Plan Rice\r\nJeera Rice\r\nVeg. Puloa\r\nEgg Biriyani\r\nChicken Biriyani\r\nVeg. Biriyani', 'Biriyani.jpg', '2017-10-10', '2017-11-11', 1),
-(9, 1, 'North Indian', 'Daal Bati CHurma\r\nKachori\r\nSamosa\r\n', 'Northindian.jpg', '2017-10-10', '2017-10-10', 1),
-(10, 2, 'Chicken', 'Chicken', 'main-qimg-a41a7feb6989721076588beac75b2ab3-c1.jpg', '2017-11-11', '2017-11-11', 1);
 
 -- --------------------------------------------------------
 
@@ -304,6 +271,30 @@ CREATE TABLE `login_attempts` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `offer`
+--
+
+CREATE TABLE `offer` (
+  `id` int(11) NOT NULL,
+  `title` varchar(255) DEFAULT NULL,
+  `price` varchar(255) NOT NULL,
+  `description` text,
+  `image` varchar(100) DEFAULT NULL,
+  `created_on` date NOT NULL,
+  `updated_on` date NOT NULL,
+  `status` tinyint(1) NOT NULL DEFAULT '1'
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `offer`
+--
+
+INSERT INTO `offer` (`id`, `title`, `price`, `description`, `image`, `created_on`, `updated_on`, `status`) VALUES
+(2, 'offer 1', '128', '', 'paneer.jpg', '2018-01-11', '2018-01-11', 1);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `products`
 --
 
@@ -327,8 +318,10 @@ CREATE TABLE `products` (
 --
 
 INSERT INTO `products` (`id`, `brand_id`, `category_id`, `sub_category_id`, `name`, `sku_code`, `price1`, `price2`, `description`, `created_date`, `updated_date`, `status`) VALUES
-(1, 3, 2, NULL, 'product 1', '001', '999', '555', 'Desci', '2017-12-28 16:54:35', '2017-12-28 16:54:35', 1),
-(2, 4, 4, NULL, 'Product 2', '002', '899', '399', 'Sample ', '2017-12-28 17:01:13', '2017-12-28 17:01:13', 1);
+(1, 3, 3, NULL, 'product 1', '001', '259', '199', 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry''s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.', '2017-12-29 16:45:04', '2017-12-29 16:45:04', 0),
+(2, 4, 1, NULL, 'Product 2', '002', '599', '439', 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry''s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.', '2017-12-29 16:46:17', '2017-12-29 16:46:17', 1),
+(3, 2, 2, NULL, 'Product 3', '003', '999', '899', '', '2017-12-29 16:47:55', '2017-12-29 16:47:55', 1),
+(4, 3, 3, NULL, 'Prod Four', '004', '295', '395', 'Desc', '2018-01-11 12:07:44', '2018-01-11 15:07:31', 1);
 
 -- --------------------------------------------------------
 
@@ -364,6 +357,47 @@ CREATE TABLE `product_images` (
   `updated_date` datetime NOT NULL,
   `status` tinyint(1) NOT NULL DEFAULT '1'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `product_images`
+--
+
+INSERT INTO `product_images` (`id`, `product_id`, `image`, `created_date`, `updated_date`, `status`) VALUES
+(1, 1, '13245.jpg', '2017-12-29 16:45:04', '2017-12-29 16:45:04', 0),
+(2, 1, 'download.jpg', '2017-12-29 16:45:04', '2017-12-29 16:45:04', 0),
+(3, 1, 'landlord.jpg', '2017-12-29 16:45:04', '2017-12-29 16:45:04', 0),
+(4, 2, '132451.jpg', '2017-12-29 16:46:17', '2017-12-29 16:46:17', 1),
+(6, 2, 'headshot.jpg', '2017-12-29 16:46:17', '2017-12-29 16:46:17', 1),
+(7, 2, 'HIGH_CORT.jpg', '2017-12-29 16:46:17', '2017-12-29 16:46:17', 1),
+(8, 3, '132452.jpg', '2017-12-29 16:47:55', '2017-12-29 16:47:55', 1),
+(9, 4, 'rolls.jpg', '2018-01-11 12:07:44', '2018-01-11 12:07:44', 1),
+(11, 4, 'sweetdises.jpg', '2018-01-11 12:07:44', '2018-01-11 12:07:44', 1),
+(13, 4, 'Biriyani1.jpg', '2018-01-11 14:51:33', '2018-01-11 14:51:33', 1),
+(15, 4, 'Northindian.jpg', '2018-01-11 15:07:08', '2018-01-11 15:07:08', 1),
+(16, 4, 'paneer.jpg', '2018-01-11 15:07:08', '2018-01-11 15:07:08', 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `slider`
+--
+
+CREATE TABLE `slider` (
+  `id` int(11) NOT NULL,
+  `title` varchar(255) DEFAULT NULL,
+  `description` text,
+  `image` varchar(100) DEFAULT NULL,
+  `created_on` date NOT NULL,
+  `updated_on` date NOT NULL,
+  `status` tinyint(1) NOT NULL DEFAULT '1'
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `slider`
+--
+
+INSERT INTO `slider` (`id`, `title`, `description`, `image`, `created_on`, `updated_on`, `status`) VALUES
+(5, 'new slider', 'new slider', 'parathas.jpg', '2018-01-11', '2018-01-11', 1);
 
 -- --------------------------------------------------------
 
@@ -423,7 +457,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `ip_address`, `username`, `password`, `salt`, `email`, `activation_code`, `forgotten_password_code`, `forgotten_password_time`, `remember_code`, `created_on`, `last_login`, `verify_token`, `email_otp`, `mobile_otp`, `active`, `first_name`, `last_name`, `company`, `phone`) VALUES
-(1, '127.0.0.1', 'administrator', '$2y$08$k3qsZ9bkIpmTk4Dfx2LiDevEVfHDiw5FAE4DS.uVWVbWHCvml8oN6', '', 'admin@admin.com', '', NULL, NULL, NULL, 1268889823, 1514455780, NULL, NULL, NULL, 1, 'Admin', 'istrator', 'ADMIN', '9602947878');
+(1, '127.0.0.1', 'administrator', '$2y$08$k3qsZ9bkIpmTk4Dfx2LiDevEVfHDiw5FAE4DS.uVWVbWHCvml8oN6', '', 'admin@admin.com', '', NULL, NULL, NULL, 1268889823, 1515660151, NULL, NULL, NULL, 1, 'Admin', 'istrator', 'ADMIN', '9602947878');
 
 -- --------------------------------------------------------
 
@@ -558,12 +592,6 @@ ALTER TABLE `categories`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `food_category`
---
-ALTER TABLE `food_category`
-  ADD PRIMARY KEY (`id`);
-
---
 -- Indexes for table `food_images`
 --
 ALTER TABLE `food_images`
@@ -594,6 +622,12 @@ ALTER TABLE `login_attempts`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `offer`
+--
+ALTER TABLE `offer`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `products`
 --
 ALTER TABLE `products`
@@ -609,6 +643,12 @@ ALTER TABLE `product_available_on`
 -- Indexes for table `product_images`
 --
 ALTER TABLE `product_images`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `slider`
+--
+ALTER TABLE `slider`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -675,11 +715,6 @@ ALTER TABLE `cart`
 ALTER TABLE `categories`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 --
--- AUTO_INCREMENT for table `food_category`
---
-ALTER TABLE `food_category`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
---
 -- AUTO_INCREMENT for table `food_images`
 --
 ALTER TABLE `food_images`
@@ -705,10 +740,15 @@ ALTER TABLE `groups`
 ALTER TABLE `login_attempts`
   MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
 --
+-- AUTO_INCREMENT for table `offer`
+--
+ALTER TABLE `offer`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+--
 -- AUTO_INCREMENT for table `products`
 --
 ALTER TABLE `products`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT for table `product_available_on`
 --
@@ -718,7 +758,12 @@ ALTER TABLE `product_available_on`
 -- AUTO_INCREMENT for table `product_images`
 --
 ALTER TABLE `product_images`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+--
+-- AUTO_INCREMENT for table `slider`
+--
+ALTER TABLE `slider`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 --
 -- AUTO_INCREMENT for table `sub_categories`
 --

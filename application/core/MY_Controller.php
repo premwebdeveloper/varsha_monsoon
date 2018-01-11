@@ -7,23 +7,23 @@ class MY_Controller extends CI_Controller
 	function __construct()
 	{
 		parent::__construct();
-        $this->load->Model('Cart_Model');
+       /* $this->load->Model('Cart_Model');
         $this->load->Model('Product_Model');
-		$this->load->Model('Food_Listing_Model');
+		$this->load->Model('Food_Listing_Model');*/
 
 		$this->data['page_title'] = 'Food Management System';
         $this->data['page_description'] = 'Food Management System';
         $this->data['copyright'] = date("Y") . ' © Food Management System.';
 
         // If logged in user is USER not admin
-        if($this->ion_auth->logged_in())
+        /*if($this->ion_auth->logged_in())
         {
             $user_id = $this->access->get_user_id();
 
             $this->data['cart_items'] = $cart_items = $this->Cart_Model->cartProducts($user_id);
 
             $this->data['cart_item_count'] = count($cart_items);
-        }
+        }*/
 	}
 
 	protected function render($the_view = NULL, $template = 'public_master')

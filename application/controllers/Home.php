@@ -6,14 +6,14 @@ class Home extends MY_Controller {
 	function __construct()
 	{
 		parent::__construct();
+        $this->load->model('Products_Model');
 	}
 
 	public function index()
 	{
-        //Load Product Model
-        $this->load->model('Food_Listing_Model');
         //Get Product for Home Screen
-        $this->data['listing'] = $listing = $this->Food_Listing_Model->Listings();
+        $this->data['products'] = $products = $this->Products_Model->index();
+
 		$this->render('home/index');
 	}
 

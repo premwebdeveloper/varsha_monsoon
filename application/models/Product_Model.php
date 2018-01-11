@@ -8,6 +8,39 @@ class Product_Model extends CI_Model
         parent::__construct();
     }
 
+    public function index($product_id = null)
+    {
+        $this->db->select('prod.*, cat.category, brand.brand');
+
+        $this->db->from('products prod');
+
+        $this->db->join('categories cat', 'cat.id = prod.category_id');
+
+        $this->db->join('brands brand', 'brand.id = prod.brand_id');
+
+        $this->db->where('prod.status', '1');
+
+        if(!empty($product_id))
+        {
+            $this->db->where('prod.id', $product_id);
+        }
+
+        $this->db->where('prod.status', '1');
+
+        $query = $this->db->get();
+
+        if(!empty($product_id))
+        {
+            $result = $query->row_array();
+        }
+        else
+        {
+            $result = $query->result_array();
+        }
+
+        return $result;
+    }
+
     // Get food types like Pure ver or Non veg
     public function getFoodType($type = null)
     {

@@ -1,5 +1,21 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed'); ?>
 
+<script type="text/javascript">
+    $(document).ready(function(){
+        $('[data-toggle="remove_slider"]').confirmation({
+
+            onConfirm: function(){
+                    var slider_id = $(this).attr('data-id');
+                    window.location.href = "<?= base_url();?>Admin/removeSlider/"+slider_id;
+            }, // Set event when click at confirm button
+
+            onCancel: function(){
+                    var slider_id = $(this).attr('data-id');
+            }
+        });
+    });
+</script>
+
 <div class="row wrapper border-bottom white-bg page-heading">
     <div class="col-lg-8">
 
@@ -63,14 +79,14 @@
                                         <img alt="image" style="height: 70px; width: 70px;" src="<?= base_url(); ?>uploads/slider/<?= $slider['image']; ?>">
                                     </td>
                                     <td class="center">
-                                        <a class="custom-btn btn-primary dim" href="<?= site_url('Admin/edit_food_category/'.$slider['id']); ?>" data-toggle="tooltip" title="Edit" data-placement="top">
+                                        <!-- <a class="custom-btn btn-primary dim" href="<?= site_url('Admin/editSlider/'.$slider['id']); ?>" data-toggle="tooltip" title="Edit" data-placement="top">
                                             <i class="fa fa-pencil" aria-hidden="true"></i>
-                                        </a>
+                                        </a> -->
 
-                                        <a class="custom-btn btn-danger dim disable_user" data-id='<?= $slider['id']; ?>' title="Delete"
-                                            data-toggle="food_category_delete_confirmation" data-singleton="true" data-placement="top" data-popout="true" data-btn-ok-label="Yes" data-btn-ok-icon="fa fa-check" data-btn-ok-class="custom-btn btn-success dim disable_user confrm" data-btn-cancel-label="No" data-btn-cancel-icon="fa fa-times" data-btn-cancel-class="custom-btn btn-warning dim disable_user confrm">
+                                        <a class="custom-btn btn-danger dim remove_slider" data-id='<?= $slider['id']; ?>' title="Delete"
+                                            data-toggle="remove_slider" data-singleton="true" data-placement="top" data-popout="true" data-btn-ok-label="Yes" data-btn-ok-icon="fa fa-check" data-btn-ok-class="custom-btn btn-success dim remove_slider confrm" data-btn-cancel-label="No" data-btn-cancel-icon="fa fa-times" data-btn-cancel-class="custom-btn btn-warning dim remove_slider confrm">
 
-                                            <i class="fa fa-ban" aria-hidden="true"></i>
+                                            <i class="fa fa-times" aria-hidden="true"></i>
                                         </a>
 
                                     </td>

@@ -167,12 +167,139 @@ class Products extends Auth_Controller {
     // View product Details
     public function edit()
     {
-        echo $product_id = $this->uri->segment(3);
-        exit;
+        // Add breadcrumbs
+        $this->breadcrumbs->push('Home', 'Dashboard');
+        $this->breadcrumbs->push('Products', 'Products/index');
+        $this->breadcrumbs->push('Product Edit', 'edit');
+
+        $this->data['page_description'] = 'Product Edit';
+
+        $product_id = $this->uri->segment(3);
+
+        if($this->input->post())
+        {
+            $this->form_validation->set_rules('brand', 'Brand', 'required|trim');
+            $this->form_validation->set_rules('category', 'Category', 'required|trim');
+            $this->form_validation->set_rules('name', 'Name', 'required|trim');
+            $this->form_validation->set_rules('sku_code', 'SKU Code', 'required|trim');
+            $this->form_validation->set_rules('price1', 'Price 1', 'required|trim');
+            $this->form_validation->set_rules('price2', 'Price 2', 'required|trim');
+
+            $product = array();
+
+            if($this->form_validation->run() === true)
+            {
+                $product['product_id'] = $product_id = $this->input->post('product_id');
+                $product['brand'] = $brand = $this->input->post('brand');
+                $product['category'] = $category = $this->input->post('category');
+                $product['name'] = $name = $this->input->post('name');
+                $product['sku_code'] = $sku_code = $this->input->post('sku_code');
+                $product['price1'] = $price1 = $this->input->post('price1');
+                $product['price2'] = $price2 = $this->input->post('price2');
+                $product['description'] = $description = $this->input->post('description');
+
+                $product_images = array();
+
+                //Upload Product Images
+                if(!empty($_FILES['images']['name'][0]))
+                {
+                    $filesCount = count($_FILES['images']['name']);
+
+                    for($i = 0; $i < $filesCount; $i++)
+                    {
+                        $path = "uploads/products/";
+
+                        if(!file_exists($path))
+                        {
+                            mkdir($path, 0777, true);
+                        }
+
+                        $_FILES['userFile']['name'] = $_FILES['images']['name'][$i];
+                        $_FILES['userFile']['type'] = $_FILES['images']['type'][$i];
+                        $_FILES['userFile']['tmp_name'] = $_FILES['images']['tmp_name'][$i];
+                        $_FILES['userFile']['error'] = $_FILES['images']['error'][$i];
+                        $_FILES['userFile']['size'] = $_FILES['images']['size'][$i];
+
+                        $config['upload_path'] = $path;
+                        $config['allowed_types'] = 'bmp|jpg|png|jpeg';
+                        $config['max_size'] = 8000;
+
+                        // Set upload library
+                        $this->load->library('upload', $config);
+
+                        if ( ! $this->upload->do_upload('userFile'))
+                        {
+                            $upload_error = array('error' => $this->upload->display_errors());
+                        }
+                        else
+                        {
+                            $fileData = $this->upload->data();
+                            $uploadData[$i]['file_name'] = $fileData['file_name'];
+                            $uploadData[$i]['type'] = $fileData['image_type'];
+                            $uploadData[$i]['size'] = $fileData['file_size'];
+                        }
+                    }
+                }
+
+                // If any error then show error
+                if(!empty($upload_error))
+                {
+                    $_SESSION['error'] = $upload_error['error'];
+                    $this->session->mark_as_flash('error');
+                    //$this->render('products/insert');
+                    redirect('Products/edit');
+                }
+                else
+                {
+                    $i = 0;
+                    foreach($uploadData as $upload)
+                    {
+                        $product_images[$i] = $upload['file_name'];
+                        $i++;
+                    }
+
+                    $update = $this->Products_Model->editProduct($product);
+
+                    // Upload all images
+                    if(!empty($product_images))
+                    {
+                        foreach($product_images as $image)
+                        {
+                            $add_image = $this->Products_Model->addProductImage($product_id, $image);
+                        }
+                        if($add_image)
+                        {
+                            $this->session->set_flashdata('message', 'Product edit successfully.');
+                        }
+                        else
+                        {
+                            $this->session->set_flashdata('message', 'Something went wrong.');
+                        }
+                    }
+                    else
+                    {
+                        $this->session->set_flashdata('message', 'Product edit successfully.');
+                    }
+
+                    redirect('Products');
+                }
+            }
+        }
+
+        // Get All Brands
+        $this->data['brands'] = $brands = $this->Brands_Model->index();
+
+        // Get All Categories
+        $this->data['categories'] = $categories = $this->Categories_Model->index();
+
+        $this->data['product'] = $product = $this->Products_Model->index($product_id);
+
+        $this->data['productImages'] = $productImages = $this->Products_Model->getProductImages($product_id);
+
         $this->render('products/edit');
     }
 
-    // Delete user address
+    // Delete Product
     public function deleteProduct()
     {
         $product_id = $this->uri->segment(3);
@@ -188,6 +315,25 @@ class Products extends Auth_Controller {
             $this->session->set_flashdata('message', 'Something went wrong.');
         }
         redirect('Products');
+    }
+
+    // Delete Product Image
+    public function deleteImage()
+    {
+        $image_id = $this->uri->segment(3);
+        $product_id = $this->uri->segment(4);
+
+        $delete = $this->Products_Model->deleteImage($image_id);
+
+        if($delete)
+        {
+            $this->session->set_flashdata('message', 'Image deleted successfully.');
+        }
+        else
+        {
+            $this->session->set_flashdata('message', 'Something went wrong.');
+        }
+        redirect('Products/edit/'.$product_id);
     }
 
 }

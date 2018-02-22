@@ -1,157 +1,141 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed'); ?>
 
 <?= $this->breadcrumbs->show(); ?>
-
-<div ng-app="productApp" ng-controller="productController">
-    <div class="information-blocks">
-        <div class="row">
-
-            <!-- Paroduct page sidebar start -->
-            <div class="col-md-3">
-
-                <div class="information-blocks categories-border-wrapper">
-
-                    <!-- Quick Filter -->
-                    <div class="block-title size-3">Quick Filter</div>
-                    <div class="accordeon">
-                        <div class="article-container style-1 p10">
-                            <div class="form-group1" ng-repeat="foodType in foodTypes">
-
-                                <input type="checkbox" id="{{foodType.id}}" value="{{foodType.id}}" ng-checked="selection.indexOf(foodType.id) > -1" ng-click="foodTypeChange(foodType.id)">
-                                {{foodType.type}}
-
+<div class="information-blocks">
+    <div class="row">
+        <div class="col-md-9 col-md-push-3 col-sm-8 col-sm-push-4">
+            <div class="row shop-grid grid-view">
+                <div id="all_product">
+                    <?php
+                    foreach ($products as $product)
+                    {
+                        // Get product images
+                        $images = $this->Products_Model->getProductImages($product['id']);
+                        /*echo "<pre>";
+                        print_r($images);
+                        die;*/
+                    ?>
+                        <div class="col-md-3 col-sm-4 shop-grid-item">
+                            <div class="product-slide-entry shift-image style_border">
+                                <div class="product-image">
+                                    <img style="height: 200px;" src="<?= base_url(); ?>uploads/products/<?= $images[0]['image']; ?>" alt="" />
+                                    <img style="height: 200px;" src="<?= base_url(); ?>uploads/products/<?= $images[1]['image']; ?>" alt="" />
+                                    <!-- <div class="bottom-line left-attached">
+                                        <a class="bottom-line-a square"><i class="fa fa-shopping-cart"></i></a>
+                                        <a class="bottom-line-a square"><i class="fa fa-heart"></i></a>
+                                        <a class="bottom-line-a square"><i class="fa fa-retweet"></i></a>
+                                        <a class="bottom-line-a square"><i class="fa fa-expand"></i></a>
+                                    </div> -->
+                                </div>
+                                <a class="tag" href="#"><?= $product['brand']; ?></a>
+                                <a class="title" href="#"><?= $product['name']; ?></a>
+                                <div class="price">
+                                    <div class="prev"><?= $product['price2']; ?></div>
+                                    <div class="current"><?= $product['price1']; ?></div>
+                                </div>
                             </div>
+                            <div class="clear"></div>
                         </div>
-                    </div>
-
-                    <!-- Day Meals -->
-                    <div class="block-title size-3">Day Meals</div>
-                    <div class="accordeon">
-                        <div class="article-container style-1 p10">
-
-                            <div class="form-group1" ng-repeat="dayMeal in dayMeals">
-
-                                <input type="checkbox" id="{{dayMeal.id}}" value="{{dayMeal.id}}" ng-checked="selection.indexOf(dayMeal.id) > -1" ng-click="dayMealChange(dayMeal.id)">
-                                {{dayMeal.meal_name}}
-
-                            </div>
-
-                        </div>
-                    </div>
-
-                    <!-- Cuisine -->
-                    <div class="block-title size-3">Cuisine</div>
+                    <?php
+                    }
+                    ?>
+                </div>
+                <div id="selected_products" style="display: none;">
+                </div>
+                <div id="selected_products_empty" style="display: none;">
+                    <h2>Sorry ! Product Not Available.</h2>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 col-md-pull-9 col-sm-4 col-sm-pull-8 blog-sidebar">
+            <div class="information-blocks categories-border-wrapper">
+                <div class="block-title size-3">Brands</div>
+                <div class="accordeon" style="margin-bottom: 10px;">
                     <div class="article-container style-1">
                         <ul>
-                            <li ng-repeat="category in foodCategories">
-                                <a href="javascript:;" ng-class="{category_highlight : selectedCat === category.id}" ng-click="selectProductCategory(category.id)" id="cat_{{category.id}}">{{category.food_category}}</a>
-                            </li
+                            <?php
+                            foreach ($brands as $brand)
+                            {
+                            ?>
+                                <h5 class="p10 pb0 pt0">
+                                    <input type="checkbox" class="brands" name="brand[]" value="<?= $brand['id']; ?>">
+                                    <a href="#">&nbsp;<?= $brand['brand']; ?></a>
+                                </h5>
+                            <?php
+                            }
+                            ?>
                         </ul>
                     </div>
                 </div>
-
-                <div class="information-blocks">
-                    <div class="block-title size-2">Sort by sizes</div>
-                    <div class="range-wrapper">
-                        <div id="prices-range"></div>
-                        <div class="range-price">
-                            Price:
-                            <div class="min-price"><b>$<span>0</span></b></div>
-                            <b>-</b>
-                            <div class="max-price"><b>$<span>500</span></b></div>
-                        </div>
-                        <a class="button style-14">filter</a>
+                <div class="block-title size-3">Categories</div>
+                <div class="accordeon">
+                    <div class="article-container style-1">
+                        <ul>
+                            <?php
+                            foreach ($categories as $category)
+                            {
+                            ?>
+                                <h5 class="p10 pb0 pt0">
+                                    <input type="checkbox" class="categories" name="category[]" value="<?= $category['id']; ?>">
+                                    <a href="#"><?= $category['category']; ?></a>
+                                </h5>
+                            <?php
+                            }
+                            ?>
+                        </ul>
                     </div>
-                </div>
-
-            </div>
-
-            <!-- Products section start -->
-            <div class="col-md-9">
-
-                <div class="page-selector" style="padding: 15px 0 15px 0;">
-                    <div class="shop-grid-controls">
-
-                        <div class="col-md-4">
-                            <div class="inline-text pb10">Sort by :</div>
-                            <select class="form-control" ng-model="orderBy">
-                                <option value="" selected="selected">Sort By</option>
-                                <option value="price-low-high">Price Low-High</option>
-                                <option value="price-high-low">Price High-Low</option>
-                                <option>Rating</option>
-                            </select>
-                        </div>
-
-                        <div class="col-md-4">
-                            <div class="inline-text pb10">Per Page :</div>
-                            <select ng-model="entryLimit" class="form-control">
-                                <option>4</option>
-                                <option>8</option>
-                                <option>12</option>
-                                <option>40</option>
-                                <option>100</option>
-                            </select>
-                        </div>
-
-                        <div class="col-md-4">
-                            <div class="inline-text pb10">Search :</div>
-                            <input type="text" ng-model="search" ng-change="filter()" placeholder="Search" class="form-control" />
-                        </div>
-
-                    </div>
-                    <div class="clear"></div>
-                </div>
-
-                <div class="row shop-grid grid-view">
-
-                    <!-- Ng repeat -->
-                    <div class="col-md-3 col-sm-4 shop-grid-item" ng-repeat="data in filtered = (list | filter:search | orderBy : orderByPrice : predicate :reverse : order) | startFrom:(currentPage-1)*entryLimit | limitTo:entryLimit">
-                        <div class="product-slide-entry shift-image style_border products" id="">
-
-                            <div class="product-image">
-                                <a href="<?= site_url('product/view'); ?>/{{data.id}}">
-                                    <img src="<?= base_url();?>uploads/listingImage/{{data.user_id}}/{{data.image}}" alt="{{data.image}}" />
-                                    <img src="<?= base_url();?>uploads/listingImage/{{data.user_id}}/{{data.image}}" alt="{{data.image}}" />
-                                </a>
-                            </div>
-
-                            <a class="title" href="<?= site_url('product/view'); ?>/{{data.id}}">{{data.food_name}}</a>
-
-                            <div class="rating-box">
-                                <div class="star"><i class="fa fa-star-o"></i></div>
-                                <div class="star"><i class="fa fa-star-o"></i></div>
-                                <div class="star"><i class="fa fa-star-o"></i></div>
-                                <div class="star"><i class="fa fa-star-o"></i></div>
-                                <div class="star"><i class="fa fa-star-o"></i></div>
-                                <div class="reviews-number">25 reviews</div>
-                            </div>
-
-                            <div class="price">
-                                <div class="prev"><i class="fa fa-inr" aria-hidden="true"></i>199,99</div>
-                                <div class="current"><i class="fa fa-inr" aria-hidden="true"></i> {{data.price}} </div>
-                            </div>
-
-                        </div>
-                        <div class="clear"></div>
-                    </div>
-
-                    <!-- If no products found -->
-                    <div class="col-md-12" ng-show="filteredItems == 0">
-                        <div class="col-md-12">
-                            <h4>No products found</h4>
-                        </div>
-                    </div>
-
-                    <!-- Pagination -->
-                    <div class="col-md-12 text-right" ng-show="filteredItems > 0">
-                        <div pagination="" page="currentPage" on-select-page="setPage(page)" boundary-links="true" total-items="filteredItems" items-per-page="entryLimit" class="pagination-small" previous-text="&laquo;" next-text="&raquo;">
-                        </div>
-                    </div>
-
                 </div>
             </div>
         </div>
     </div>
 </div>
+<script type="text/javascript">
+    $(document).ready(function(){
+        $('input[type="checkbox"]').change(function() {
+            /*var data = $('.categories:checkbox:checked').val();
+            alert(data);*/
+            var category = [];
+            var brand = [];
+            $('input.brands:checkbox:checked').each(function () {
+                brand.push($(this).val());
+            });
+            $('input.categories:checkbox:checked').each(function () {
+                category.push($(this).val());
+            });
 
-<script src="<?= base_url(); ?>frontend_assets/js/ui-bootstrap-tpls-0.10.0.min.js"></script>
+            $.ajax({
+                url: "<?= base_url('Product/get_products'); ?>",
+                type: "POST",
+                data: { brand : brand,  category : category },
+                success:function(data){
+                    var result = $.parseJSON(data);
+                    $("#selected_products").html(result);
+                    if(result == 0 || data == 0)
+                    {
+                        if(brand != "" || category != "")
+                        {
+                            $("#selected_products_empty").show();
+                            $("#all_product").hide();
+                            $("#selected_products").hide();
+                        }
+                        else
+                        {
+                            $("#selected_products_empty").hide();
+                            $("#all_product").show();
+                            $("#selected_products").hide();
+                        }
+                    }
+                    else
+                    {
+                        $("#selected_products").show();
+                        $("#all_product").hide();
+                        $("#selected_products_empty").hide();
+                    }
+                }
+            });
+
+        });
+
+
+    });
+</script>

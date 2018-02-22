@@ -8,8 +8,10 @@ class Products_Model extends CI_Model
         parent::__construct();
     }
 
-    public function index($product_id = null)
+    public function index($product_id = null, $limit = null, $start = null, $brand_id = null, $category_id = null)
     {
+        $this->db->limit($limit, $start);
+
         $this->db->select('prod.*, cat.category, brand.brand');
 
         $this->db->from('products prod');
@@ -25,7 +27,15 @@ class Products_Model extends CI_Model
             $this->db->where('prod.id', $product_id);
         }
 
-        $this->db->where('prod.status', '1');
+        if(!empty($brand_id))
+        {
+            $this->db->where('prod.brand_id', $brand_id);
+        }
+
+        if(!empty($category_id))
+        {
+            $this->db->where('prod.category_id', $category_id);
+        }
 
         $query = $this->db->get();
 
@@ -37,6 +47,34 @@ class Products_Model extends CI_Model
         {
             $result = $query->result_array();
         }
+
+        return $result;
+    }
+
+    // Get no of Rows for Pagination
+    public function products_total_rows()
+    {
+        $query = $this->db->get_where('products', array('status' => '1'));
+
+        $result = $query->num_rows();
+
+        return $result;
+    }
+
+    // Get no of Rows for Pagination(Ajax)
+    public function products_total_rows_for_select($brand_id = null, $category_id = null)
+    {
+        if(!empty($brand_id))
+        {
+            $query = $this->db->get_where('products', array('status' => '1', 'brand_id' => $brand_id));
+        }
+
+        if(!empty($category_id))
+        {
+            $query = $this->db->get_where('products', array('status' => '1', 'category_id' => $category_id));
+        }
+
+        $result = $query->num_rows();
 
         return $result;
     }

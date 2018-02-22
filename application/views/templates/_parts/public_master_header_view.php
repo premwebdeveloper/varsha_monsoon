@@ -156,26 +156,12 @@
                             }
                             ?>
 
-                            <!-- My cart section -->
-                            <a class="header-functionality-entry open-cart-popup" href="<?= site_url('Cart'); ?>">
-                                <i class="fa fa-shopping-cart"></i>
-                                <span>My Cart</span>
+                           <!--  My cart section
+                           <a class="header-functionality-entry open-cart-popup" href="<?= site_url('Cart'); ?>">
+                               <i class="fa fa-shopping-cart"></i>
+                               <span>My Cart</span>
 
-                                <?php
-                                if($this->ion_auth->logged_in())
-                                {
-                                    echo "[ ".$cart_item_count." ]";
-                                }
-                                elseif(isset($_SESSION['cart_value']))
-                                {
-                                    if(!empty($_SESSION['cart_value']))
-                                    {
-                                        echo "[ ".count($_SESSION['cart_value'])." ]";
-                                    }
-                                }
-                                ?>
-
-                            </a>
+                           </a> -->
                         </div>
                     </div>
 

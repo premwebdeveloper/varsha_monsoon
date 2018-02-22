@@ -1,13 +1,15 @@
 -- phpMyAdmin SQL Dump
--- version 4.5.1
--- http://www.phpmyadmin.net
+-- version 4.7.0
+-- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 30, 2018 at 09:26 AM
--- Server version: 10.1.10-MariaDB
--- PHP Version: 5.6.15
+-- Generation Time: Feb 22, 2018 at 10:51 AM
+-- Server version: 10.1.22-MariaDB
+-- PHP Version: 7.1.4
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
+START TRANSACTION;
 SET time_zone = "+00:00";
 
 
@@ -19,6 +21,23 @@ SET time_zone = "+00:00";
 --
 -- Database: `food_sample`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `ads`
+--
+
+CREATE TABLE `ads` (
+  `id` int(11) NOT NULL,
+  `title` varchar(200) NOT NULL,
+  `description` text,
+  `price` int(11) DEFAULT NULL,
+  `image` text,
+  `created_date` datetime NOT NULL,
+  `updated_date` datetime NOT NULL,
+  `status` tinyint(1) NOT NULL DEFAULT '1'
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -132,48 +151,6 @@ CREATE TABLE `food_images` (
   `image` varchar(255) NOT NULL,
   `status` tinyint(1) NOT NULL DEFAULT '1'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `food_images`
---
-
-INSERT INTO `food_images` (`id`, `food_listing_id`, `image`, `status`) VALUES
-(187, 28, 'Rasgulla-2.jpg', 1),
-(188, 28, 'Rasgulla-pic-1_thumb.jpg', 1),
-(189, 28, 'rasagulla.jpg', 1),
-(190, 29, 'gulab-jamun.jpg', 1),
-(191, 29, 'gulab_jamun_2014.jpg', 1),
-(192, 29, 'gulabs.jpg', 1),
-(193, 30, 'peda.jpg', 1),
-(194, 31, 'IMG_1880.JPG', 1),
-(195, 31, 'ras_malai.jpg', 1),
-(196, 32, '13D966467BD08BE9_Gulab-halwa-3.jpg', 1),
-(197, 32, 'gulab-halwa-indian-sweet-food-isolate-white-90621876.jpg', 1),
-(198, 32, 'gulab.jpg', 1),
-(199, 31, 'Delicious-Bengali-RASMALAI-Classic-Bengali-Ras-Malai.jpg', 1),
-(200, 30, 'pedaas.jpg', 1),
-(202, 33, 'maxresdefault.jpg', 1),
-(203, 33, 'paneer-lababdar.jpg', 1),
-(204, 34, 'KallummakayaBiriyani.jpg', 1),
-(205, 34, 'main-qimg-a41a7feb6989721076588beac75b2ab3-c.jpg', 1),
-(206, 34, 'mm.jpg', 1),
-(207, 34, 'mumbai-style-veg-swasthis-recipes.jpg', 1),
-(208, 35, 'Special-Thali_1423637207.jpg', 1),
-(209, 35, 'normal_thali.jpg', 1),
-(210, 35, 'north-indian-dish-malai.jpg', 1),
-(211, 35, 'thalies.jpg', 1),
-(212, 36, 'DSCN4026.JPG', 1),
-(213, 36, 'bati-dal-churma-625_625x350_61448611452.jpg', 1),
-(214, 36, 'daal_bati_pakwan_520_070915013641.jpg', 1),
-(215, 37, 'samosa-recipe-snacks-recipes.jpg', 1),
-(216, 37, 'samosaaaa.jpg', 1),
-(217, 37, 'samosss.jpg', 1),
-(218, 38, 'kachoris.jpg', 1),
-(219, 38, 'kachorooo.jpg', 1),
-(220, 39, 'gulab-jamun1.jpg', 1),
-(221, 39, 'gulabs1.jpg', 1),
-(222, 40, 'mumbai-style-veg-swasthis-recipes1.jpg', 1),
-(223, 40, 'slide-3.png', 1);
 
 -- --------------------------------------------------------
 
@@ -318,10 +295,7 @@ CREATE TABLE `products` (
 --
 
 INSERT INTO `products` (`id`, `brand_id`, `category_id`, `sub_category_id`, `name`, `sku_code`, `price1`, `price2`, `description`, `created_date`, `updated_date`, `status`) VALUES
-(1, 3, 3, NULL, 'product 1', '001', '259', '199', 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry''s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.', '2017-12-29 16:45:04', '2017-12-29 16:45:04', 0),
-(2, 4, 1, NULL, 'Product 2', '002', '599', '439', 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry''s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.', '2017-12-29 16:46:17', '2017-12-29 16:46:17', 1),
-(3, 2, 2, NULL, 'Product 3', '003', '999', '899', '', '2017-12-29 16:47:55', '2017-12-29 16:47:55', 1),
-(4, 3, 3, NULL, 'Prod Four', '004', '295', '395', 'Desc', '2018-01-11 12:07:44', '2018-01-11 15:07:31', 1);
+(6, 3, 1, NULL, 'gulab jamun', 'mkknjnkb132', '120', '150', 'jgyugukgyughj', '2018-02-22 14:52:54', '2018-02-22 14:52:54', 1);
 
 -- --------------------------------------------------------
 
@@ -363,26 +337,19 @@ CREATE TABLE `product_images` (
 --
 
 INSERT INTO `product_images` (`id`, `product_id`, `image`, `created_date`, `updated_date`, `status`) VALUES
-(1, 1, '13245.jpg', '2017-12-29 16:45:04', '2017-12-29 16:45:04', 0),
-(2, 1, 'download.jpg', '2017-12-29 16:45:04', '2017-12-29 16:45:04', 0),
-(3, 1, 'landlord.jpg', '2017-12-29 16:45:04', '2017-12-29 16:45:04', 0),
-(4, 2, '132451.jpg', '2017-12-29 16:46:17', '2017-12-29 16:46:17', 1),
-(6, 2, 'headshot.jpg', '2017-12-29 16:46:17', '2017-12-29 16:46:17', 1),
-(7, 2, 'HIGH_CORT.jpg', '2017-12-29 16:46:17', '2017-12-29 16:46:17', 1),
-(8, 3, '132452.jpg', '2017-12-29 16:47:55', '2017-12-29 16:47:55', 1),
-(9, 4, 'rolls.jpg', '2018-01-11 12:07:44', '2018-01-11 12:07:44', 1),
-(11, 4, 'sweetdises.jpg', '2018-01-11 12:07:44', '2018-01-11 12:07:44', 1),
-(13, 4, 'Biriyani1.jpg', '2018-01-11 14:51:33', '2018-01-11 14:51:33', 1),
-(15, 4, 'Northindian.jpg', '2018-01-11 15:07:08', '2018-01-11 15:07:08', 1),
-(16, 4, 'paneer.jpg', '2018-01-11 15:07:08', '2018-01-11 15:07:08', 1);
+(23, 6, 'Ghar-Ki-Thali-Menu_1.jpg', '2018-02-22 14:52:54', '2018-02-22 14:52:54', 1),
+(24, 6, 'gulab.jpg', '2018-02-22 14:52:54', '2018-02-22 14:52:54', 1),
+(25, 6, 'gulab_jamun_2014.jpg', '2018-02-22 14:52:54', '2018-02-22 14:52:54', 1),
+(26, 6, 'gulab-halwa-indian-sweet-food-isolate-white-90621876.jpg', '2018-02-22 14:52:55', '2018-02-22 14:52:55', 1),
+(27, 6, 'gulab-jamun.jpg', '2018-02-22 14:52:55', '2018-02-22 14:52:55', 1);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `slider`
+-- Table structure for table `sliders`
 --
 
-CREATE TABLE `slider` (
+CREATE TABLE `sliders` (
   `id` int(11) NOT NULL,
   `title` varchar(255) DEFAULT NULL,
   `description` text,
@@ -393,10 +360,10 @@ CREATE TABLE `slider` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `slider`
+-- Dumping data for table `sliders`
 --
 
-INSERT INTO `slider` (`id`, `title`, `description`, `image`, `created_on`, `updated_on`, `status`) VALUES
+INSERT INTO `sliders` (`id`, `title`, `description`, `image`, `created_on`, `updated_on`, `status`) VALUES
 (5, 'new slider', 'new slider', 'parathas.jpg', '2018-01-11', '2018-01-11', 1);
 
 -- --------------------------------------------------------
@@ -457,7 +424,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `ip_address`, `username`, `password`, `salt`, `email`, `activation_code`, `forgotten_password_code`, `forgotten_password_time`, `remember_code`, `created_on`, `last_login`, `verify_token`, `email_otp`, `mobile_otp`, `active`, `first_name`, `last_name`, `company`, `phone`) VALUES
-(1, '127.0.0.1', 'administrator', '$2y$08$k3qsZ9bkIpmTk4Dfx2LiDevEVfHDiw5FAE4DS.uVWVbWHCvml8oN6', '', 'admin@admin.com', '', NULL, NULL, NULL, 1268889823, 1515660151, NULL, NULL, NULL, 1, 'Admin', 'istrator', 'ADMIN', '9602947878');
+(1, '127.0.0.1', 'administrator', '$2y$08$k3qsZ9bkIpmTk4Dfx2LiDevEVfHDiw5FAE4DS.uVWVbWHCvml8oN6', '', 'admin@admin.com', '', NULL, NULL, NULL, 1268889823, 1519290533, NULL, NULL, NULL, 1, 'Admin', 'istrator', 'ADMIN', '9602947878');
 
 -- --------------------------------------------------------
 
@@ -568,6 +535,12 @@ INSERT INTO `weak_days` (`id`, `day`) VALUES
 --
 
 --
+-- Indexes for table `ads`
+--
+ALTER TABLE `ads`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `brands`
 --
 ALTER TABLE `brands`
@@ -646,9 +619,9 @@ ALTER TABLE `product_images`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `slider`
+-- Indexes for table `sliders`
 --
-ALTER TABLE `slider`
+ALTER TABLE `sliders`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -694,6 +667,11 @@ ALTER TABLE `weak_days`
 -- AUTO_INCREMENT for dumped tables
 --
 
+--
+-- AUTO_INCREMENT for table `ads`
+--
+ALTER TABLE `ads`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `brands`
 --
@@ -748,7 +726,7 @@ ALTER TABLE `offer`
 -- AUTO_INCREMENT for table `products`
 --
 ALTER TABLE `products`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 --
 -- AUTO_INCREMENT for table `product_available_on`
 --
@@ -758,11 +736,11 @@ ALTER TABLE `product_available_on`
 -- AUTO_INCREMENT for table `product_images`
 --
 ALTER TABLE `product_images`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
 --
--- AUTO_INCREMENT for table `slider`
+-- AUTO_INCREMENT for table `sliders`
 --
-ALTER TABLE `slider`
+ALTER TABLE `sliders`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 --
 -- AUTO_INCREMENT for table `sub_categories`
@@ -804,6 +782,7 @@ ALTER TABLE `weak_days`
 ALTER TABLE `users_groups`
   ADD CONSTRAINT `fk_users_groups_groups1` FOREIGN KEY (`group_id`) REFERENCES `groups` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
   ADD CONSTRAINT `fk_users_groups_users1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION;
+COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

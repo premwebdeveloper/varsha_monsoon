@@ -59,13 +59,13 @@
 			</li>
 
 			<li>
-				<a href="<?= site_url('Admin/slider'); ?>"><i class="fa fa-outdent"></i>
+				<a href="<?= site_url('Admin_Pages/slider'); ?>"><i class="fa fa-outdent"></i>
 					<span class="nav-label">Slider</span>
 				</a>
 			</li>
 
 			<li>
-				<a href="<?= site_url('Admin/offer'); ?>"><i class="fa fa-outdent"></i>
+				<a href="<?= site_url('Admin_Pages/ads'); ?>"><i class="fa fa-outdent"></i>
 					<span class="nav-label">Offers</span>
 				</a>
 			</li>

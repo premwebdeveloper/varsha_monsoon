@@ -24,6 +24,7 @@ Class Brands_Model extends CI_Model
 
             $data = array(
                 'brand'            => $brand['name'],
+                'image'            => $brand['image'],
                 'status'          => 1,
             );
 

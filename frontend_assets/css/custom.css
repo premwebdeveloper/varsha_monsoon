@@ -21,6 +21,9 @@
 .p30{
 	padding:30px;
 }
+.pt0{
+    padding-top:0px;
+}
 .pt10{
     padding-top:10px;
 }
@@ -50,6 +53,12 @@
 }
 .pr0{
     padding-right: 0px;
+}
+.m10{
+    margin: 10px;
+}
+.m20{
+    margin: 20px;
 }
 .mb10{
     margin-bottom: 10px;

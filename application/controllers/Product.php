@@ -8,10 +8,16 @@ class Product extends MY_Controller {
         parent::__construct();
         $this->load->Model("Product_Model");
         $this->load->model('Food_Listing_Model');
+        $this->load->model('Products_Model');
+        $this->load->library('Ajax_pagination');
+        $this->perPage = 4;
     }
 
     public function index()
     {
+        $this->load->model('Brands_Model');
+        $this->load->model('Categories_Model');
+
         // Add breadcrumbs
         $this->breadcrumbs->push('Home', '/');
         $this->breadcrumbs->push('Product', 'Product');
@@ -25,9 +31,9 @@ class Product extends MY_Controller {
 
         $config["base_url"] = base_url() . "Product/index";
 
-        $this->data['total_rows'] = $config["total_rows"] = $total_rows = $this->Food_Listing_Model->listing_total_rows();
+        $this->data['total_rows'] = $config["total_rows"] = $total_rows = $this->Products_Model->products_total_rows();
 
-        $config["per_page"] = 12;
+        $config["per_page"] = 8;
 
         $config["uri_segment"] = 3;
 
@@ -35,13 +41,21 @@ class Product extends MY_Controller {
 
         $page = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
 
-        //Get All Listings
-        $this->data['product_listing'] = $product_listing = $this->Food_Listing_Model->Listings($user_id = null, $food_category = null, $config["per_page"], $page);
+        //Get Product for Home Screen
+        $this->data['products'] = $products = $this->Products_Model->index(null, $config["per_page"], $page);
 
-        $this->data['product_category'] = $product_category = $this->Product_Model->product_category();
+        //Get Brands for Home Screen
+        $this->data['brands'] = $brands = $this->Brands_Model->index();
+
+        //Get Categories for Home Screen
+        $this->data['categories'] = $categories = $this->Categories_Model->index();
 
         $this->data["links"] = $links = $this->pagination->create_links();
 
+        /*echo "<pre>";
+        print_r($products);
+        die;
+*/
         $this->render('product/index');
     }
 
@@ -333,6 +347,90 @@ class Product extends MY_Controller {
         {
             echo "1";
         }
+    }
+
+    //Get Product for Ajax in Home page
+    public function get_products()
+    {
+        $brands_id = $this->input->post("brand");
+        $categories_id = $this->input->post("category");
+
+        $product_details = array();
+        $html = '';
+        $i = 0;
+
+        if($brands_id != null)
+        {
+            foreach ($brands_id as $b_id)
+            {
+                $data = $this->Products_Model->index(null, null, null, $b_id);
+                foreach ($data as $value)
+                {
+                    $product_details[$i] = $value;
+                    $i++;
+                }
+
+            }
+        }
+        if($categories_id != null)
+        {
+            foreach ($categories_id as $id)
+            {
+                $data = $this->Products_Model->index(null, null, null, null, $id);
+                foreach ($data as $value)
+                {
+                    if(array_search($value['id'], array_column($product_details, 'id')) !== false)
+                    {
+                        $i++;
+                    }
+                    else
+                    {
+                        $product_details[$i] = $value;
+                        $i++;
+                    }
+
+                }
+            }
+        }
+
+        if(!empty($product_details))
+        {
+            foreach ($product_details as $product)
+            {
+                // Get product images
+                $images = $this->Products_Model->getProductImages($product['id']);
+                /*echo "<pre>";
+                print_r($images);
+                die;*/
+
+                $html .='<div class="col-md-3 col-sm-4 shop-grid-item">
+                    <div class="product-slide-entry shift-image style_border">
+                        <div class="product-image">
+                            <img style="height: 200px;" src="'.base_url().'uploads/products/'.$images[0]['image'].'" alt="" />
+                            <img style="height: 200px;" src="'.base_url().'uploads/products/'.$images[1]['image'].'" alt="" />
+                            <!-- <div class="bottom-line left-attached">
+                                <a class="bottom-line-a square"><i class="fa fa-shopping-cart"></i></a>
+                                <a class="bottom-line-a square"><i class="fa fa-heart"></i></a>
+                                <a class="bottom-line-a square"><i class="fa fa-retweet"></i></a>
+                                <a class="bottom-line-a square"><i class="fa fa-expand"></i></a>
+                            </div> -->
+                        </div>
+                        <a class="tag" href="#">'.$product['brand'].'</a>
+                        <a class="title" href="#">'.$product['name'].'</a>
+                        <div class="price">
+                            <div class="prev">'.$product['price2'].'</div>
+                            <div class="current">'.$product['price1'].'</div>
+                        </div>
+                    </div>
+                    <div class="clear"></div>
+                </div>';
+            }
+        }
+        else
+        {
+            $html = 0;
+        }
+        echo json_encode($html);
     }
 
 }

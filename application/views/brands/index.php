@@ -64,6 +64,7 @@
                             <thead>
                                 <tr>
                                     <th>Name</th>
+                                    <th>Image</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -74,6 +75,11 @@
                                 ?>
                                 <tr class="gradeX">
                                     <td><?= $brand['brand']; ?></td>
+                                    <td>
+                                        <div class="social-avatar p0">
+                                            <img src="<?= base_url(); ?>/uploads/brand_image/<?= $brand['image']; ?>">
+                                        </div>
+                                    </td>
                                     <td class="center">
                                         <a class="custom-btn btn-danger dim delete_brand" data-id='<?= $brand['id']; ?>' title="Are You Sure ?"
                                             data-toggle="delete_brand" data-singleton="true" data-placement="top" data-popout="true" data-btn-ok-label="Yes" data-btn-ok-icon="fa fa-check" data-btn-ok-class="custom-btn btn-success dim delete_brand confrm" data-btn-cancel-label="No" data-btn-cancel-icon="fa fa-times" data-btn-cancel-class="custom-btn btn-warning dim delete_brand confrm">

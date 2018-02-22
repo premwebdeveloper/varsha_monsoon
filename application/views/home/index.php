@@ -37,11 +37,15 @@
 					{
 					?>
 					<div class="banner-column col-md-3 col-sm-6">
-						<div class="mozaic-banner-entry type-1" style="background-image: url(<?= base_url(); ?>frontend_assets/img/<?= $ad['image']; ?>);">
+						<div class="mozaic-banner-entry type-1">
 							<div class="mozaic-banner-content">
 								<h3 class="subtitle"><?= $ad['title']; ?></h3>
 								<h2 class="title">₹<?= $ad['price']; ?></h2>
 								<div class="description"><?= $ad['description']; ?></div>
+								<a class="button style-2" href="#">shop now</a>
+							</div>
+							<div class="mozaic-banner-content p0">
+								<img src="<?= base_url(); ?>frontend_assets/img/<?= $ad['image']; ?>" class="p10" style="width: 100%; height: 238px;">
 							</div>
 						</div>
 					</div>
@@ -55,7 +59,7 @@
 
 	<div class="information-blocks">
         <div class="row">
-            <?php
+        	<?php
 			foreach ($ads as $ad)
 			{
 				if($ad['status'] == 2)
@@ -65,9 +69,9 @@
 	                <div class="sale-entry">
 	                    <div class="hot-mark red">hot</div>
 	                    <div class="sale-price">
-	                    	<img src="<?= base_url(); ?>frontend_assets/img/<?= $ad['image']; ?>" alt="" style="height:115px;" />
+	                    	<img src="<?= base_url(); ?>frontend_assets/img/<?= $ad['image']; ?>" alt="" style="height: 170px; width: 190px;margin-bottom: -7px;" />
 	                    </div>
-	                    <div class="sale-description">
+	                    <div class="sale-description pt30">
 	                    	<h4 class="blue_color text_bold" style="font-size: 22px;"><?= $ad['title']; ?></h4>
 	                    	<?= $ad['description']; ?></div>
 	                </div>

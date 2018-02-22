@@ -7,16 +7,16 @@
                     <div class="swiper-wrapper">
                         <div class="swiper-slide">
                             <div class="product-zoom-image">
-                                <img src="<?= base_url(); ?>uploads/listingImage/<?= $food_detail['user_id']; ?>/<?= $food_detail['image']; ?>" alt="" data-zoom="img/product-main-1-zoom.jpg" />
+                                <img src="<?= base_url(); ?>uploads/products/<?= $product_image[1]['image']; ?>" alt="" data-zoom="img/product-main-1-zoom.jpg" />
                             </div>
                         </div>
                         <?php
-                        foreach($food_image as $img)
+                        foreach($product_image as $img)
                         {
                         ?>
                             <div class="swiper-slide">
                                 <div class="product-zoom-image">
-                                    <img src="<?= base_url(); ?>uploads/listingImage/<?= $food_detail['user_id']; ?>/<?= $img['image']; ?>" alt="" data-zoom="<?= base_url(); ?>uploads/listingImage/<?= $food_detail['user_id']; ?>/<?= $img['image']; ?>" />
+                                    <img src="<?= base_url(); ?>uploads/products/<?= $img['image']; ?>" alt="" data-zoom="<?= base_url(); ?>uploads/products/<?= $img['image']; ?>" />
                                 </div>
                             </div>
                         <?php
@@ -26,8 +26,8 @@
                     <div class="pagination"></div>
                     <div class="product-zoom-container">
                         <div class="move-box">
-                            <img class="default-image" src="<?= base_url(); ?>uploads/listingImage/<?= $food_detail['user_id']; ?>/<?= $food_detail['image']; ?>" alt="" />
-                            <img class="zoomed-image" src="<?= base_url(); ?>uploads/listingImage/<?= $food_detail['user_id']; ?>/<?= $food_detail['image']; ?>" alt="" />
+                            <img class="default-image" src="<?= base_url(); ?>uploads/products/<?= $product_image[0]['image']; ?>" alt="" />
+                            <img class="zoomed-image" src="<?= base_url(); ?>uploads/products/<?= $product_image[0]['image']; ?>" alt="" />
                         </div>
                         <div class="zoom-area"></div>
                     </div>
@@ -37,16 +37,16 @@
                         <div class="swiper-wrapper">
                             <div class="swiper-slide selected">
                                 <div class="paddings-container">
-                                    <img src="<?= base_url(); ?>uploads/listingImage/<?= $food_detail['user_id']; ?>/<?= $food_detail['image']; ?>" alt="" />
+                                    <img src="<?= base_url(); ?>uploads/products/<?= $product_image[0]['image']; ?>" alt="" />
                                 </div>
                             </div>
                             <?php
-                            foreach($food_image as $img)
+                            foreach($product_image as $img)
                             {
                             ?>
                                 <div class="swiper-slide">
                                     <div class="paddings-container">
-                                        <img src="<?= base_url(); ?>uploads/listingImage/<?= $food_detail['user_id']; ?>/<?= $img['image']; ?>" alt="" />
+                                        <img src="<?= base_url(); ?>uploads/products/<?= $img['image']; ?>" alt="" />
                                     </div>
                                 </div>
                             <?php
@@ -60,14 +60,14 @@
         </div>
         <div class="col-sm-6 information-entry">
             <div class="product-detail-box">
-                <h1 class="product-title"><?= $food_detail['food_name']; ?></h1>
+                <h1 class="product-title"><?= $product['name']; ?></h1>
                 <h3 class="product-subtitle">
                     <?php
-                    foreach ($type as $value)
+                    foreach ($brand as $value)
                     {
-                        if($food_detail['food_type'] === $value['id'])
+                        if($product['brand_id'] === $value['id'])
                         {
-                            echo $value['type'];
+                            echo $value['brand'];
                         }
                     }
                     ?>
@@ -82,11 +82,11 @@
                 </div>
                 <div class="product-description detail-info-entry">Lorem ipsum dolor sit amet, consectetur adipiscing elit, eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, eiusmod tempor incididunt ut labore et dolore magna aliqua.</div>
                 <div class="price detail-info-entry col-md-12">
-                    <div class="prev"><i class="fa fa-inr" aria-hidden="true"></i>900</div>
-                    <div class="current"><i class="fa fa-inr" aria-hidden="true"></i><?= $food_detail['price']; ?></div>
+                    <div class="prev"><i class="fa fa-inr" aria-hidden="true"></i><?= $product['price2']; ?></div>
+                    <div class="current"><i class="fa fa-inr" aria-hidden="true"></i><?= $product['price1']; ?></div>
                 </div>
 
-                <?= form_open('Cart/add_cart/'.$food_detail['id'], ''); ?>
+                <?= form_open('Cart/add_cart/'.$product['id'], ''); ?>
 
                     <div class="quantity-selector detail-info-entry col-md-3 col-xs-12">
                         <div class="detail-info-entry-title">Quantity</div>
@@ -116,35 +116,11 @@
                     <div class="rating-number">Category :-</div>
                     <div class="star">
                         <?php
-                            if($food_detail['food_category'] == 0)
+                            foreach($categories as $cate)
                             {
-                                echo $food_detail['optional_category'];
-                            }
-                            else
-                            {
-                                foreach($food_category as $cate)
+                                if($product['category_id'] == $cate['id'])
                                 {
-                                    if($food_detail['food_category'] == $cate['id'])
-                                    {
-                                        echo $cate['food_category'];
-                                    }
-                                }
-                            }
-                        ?>
-                        / Day Meal
-                        <?php
-                            if($food_detail['breakfast_lunch_dinner'] == NULL || $food_detail['breakfast_lunch_dinner'] == 0)
-                            {
-                                echo "( - )";
-                            }
-                            else
-                            {
-                                foreach($day_meals as $meals)
-                                {
-                                    if($food_detail['breakfast_lunch_dinner'] == $meals['id'])
-                                    {
-                                        echo "( " .$meals['meal_name']. " )";
-                                    }
+                                    echo $cate['category'];
                                 }
                             }
                         ?>

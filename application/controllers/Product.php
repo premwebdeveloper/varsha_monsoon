@@ -295,9 +295,6 @@ class Product extends MY_Controller {
         //Get Type
         $this->data['brand'] = $brand = $this->Brands_Model->index();
 
-        //Get Days Meal
-        $this->data['day_meals'] = $day_meals = $this->Product_Model->getBreakfastLunchDinner();
-
         //Get Food Details
         $this->data['product'] = $product = $this->Product_Model->index($product_id);
 
@@ -305,7 +302,7 @@ class Product extends MY_Controller {
         $this->data['categories'] = $categories = $this->Categories_Model->index();
 
         //Get Food Image
-        $this->data['food_image'] = $food_image = $this->Products_Model->getProductImages($food_id);
+        $this->data['product_image'] = $product_image = $this->Products_Model->getProductImages($product_id);
 
         // Add breadcrumbs
         $this->breadcrumbs->push('Home', '/');

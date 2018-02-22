@@ -17,10 +17,8 @@
 									<div class="swiper-slide">
 										<div class="mozaic-banner-entry type-1" style="background-image: url(<?= base_url(); ?>frontend_assets/img/<?= $value['image']; ?>);">
 											<div class="mozaic-banner-content">
-												<h3 class="subtitle">Only Here</h3>
 												<h2 class="title"><?= $value['title']; ?></h2>
 												<div class="description"><?= $value['description']; ?></div>
-												<a class="button style-2" href="#">shop now</a>
 											</div>
 										</div>
 									</div>
@@ -44,7 +42,6 @@
 								<h3 class="subtitle"><?= $ad['title']; ?></h3>
 								<h2 class="title">₹<?= $ad['price']; ?></h2>
 								<div class="description"><?= $ad['description']; ?></div>
-								<a class="button style-2" href="#">shop now</a>
 							</div>
 						</div>
 					</div>

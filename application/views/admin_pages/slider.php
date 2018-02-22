@@ -1,5 +1,21 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed'); ?>
 
+<script type="text/javascript">
+    $(document).ready(function(){
+        $('[data-toggle="slider_confirmation"]').confirmation({
+
+            onConfirm: function(){
+                    var slider_id = $(this).attr('data-id');
+                    window.location.href = "<?= base_url();?>Admin_Pages/delete_slider_image/"+slider_id;
+            }, // Set event when click at confirm button
+
+            onCancel: function(){
+                    var slider_id = $(this).attr('data-id');
+            }
+        });
+    });
+</script>
+
 <div class="row wrapper border-bottom white-bg page-heading">
     <div class="col-lg-8">
         <h2>All Pages</h2>

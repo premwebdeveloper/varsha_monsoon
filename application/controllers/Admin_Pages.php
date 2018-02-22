@@ -260,7 +260,7 @@ Class Admin_Pages extends Auth_Controller
 
         $this->db->trans_commit();
 
-        $message = "Slider Iamge Deleted Successfully.";
+        $message = "Slider Image Deleted Successfully.";
         $redirect = "Admin_Pages/slider";
 
         if($update_slider)    # If the status updated successfully

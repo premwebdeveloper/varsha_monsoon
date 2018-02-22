@@ -75,8 +75,8 @@ Class Admin_Pages_Model extends CI_Model
             'title' => $title,
             'description' => $desc,
             'image' => $image,
-            'created_date' => $date,
-            'updated_date' => $date,
+            'created_on' => $date,
+            'updated_on' => $date,
         );
 
         $this->db->insert('sliders', $data);
@@ -98,7 +98,7 @@ Class Admin_Pages_Model extends CI_Model
             'title' => $title,
             'description' => $desc,
             'image' => $image,
-            'updated_date' => $date,
+            'updated_on' => $date,
         );
 
         $this->db->where('id', $id);
@@ -121,7 +121,7 @@ Class Admin_Pages_Model extends CI_Model
 
         $data = array(
             'status' => "0",
-            'updated_date' => $date,
+            'updated_on' => $date,
         );
 
         $this->db->where('id', $id);

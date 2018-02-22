@@ -128,13 +128,13 @@
 
                         <div class="middle-entry">
                             <div class="search-box">
-                                <form>
+                                <form method="post" action="<?= site_url('Product/search'); ?>">
                                     <div class="search-button">
                                         <i class="fa fa-search"></i>
-                                        <input type="submit" />
+                                        <input type="submit" id="search_for_button" name="search_product" />
                                     </div>
                                     <div class="search-field">
-                                        <input type="text" value="" placeholder="Search for product" />
+                                        <input type="text" name="search_for" id="search_for" placeholder="Search for product" />
                                     </div>
                                 </form>
                             </div>
@@ -144,24 +144,6 @@
                             <a class="header-functionality-entry open-search-popup" href="#">
 								<i class="fa fa-search"></i><span>Search</span>
 							</a>
-                            <a class="header-functionality-entry" href="javascript:;"><i class="fa fa-copy"></i><span>Compare</span></a>
-                            <?php
-                            if($this->ion_auth->logged_in())
-                            {
-                                ?>
-                                <a class="header-functionality-entry" href="javascript:;"><i class="fa fa-heart-o"></i>
-    								<span>Wishlist</span>
-    							</a>
-                                <?php
-                            }
-                            ?>
-
-                           <!--  My cart section
-                           <a class="header-functionality-entry open-cart-popup" href="<?= site_url('Cart'); ?>">
-                               <i class="fa fa-shopping-cart"></i>
-                               <span>My Cart</span>
-
-                           </a> -->
                         </div>
                     </div>
 
@@ -227,3 +209,24 @@
                 </header>
                 <div class="clear"></div>
             </div>
+			
+			<script type="text/javascript">
+            // First of all when search box is empty then can not search / after type any keyword enable search button
+                $(document).ready(function(){
+                    var search_for = $('#search_for').val();
+
+                    if(search_for == null || search_for == '')
+                    {
+                        $('#search_for_button').prop('disabled', true);
+                    }
+
+                    // If there is something written in search for box then button enable
+                    $(document).on('keyup', '#search_for', function(){
+                        var search_for = $('#search_for').val();
+                        if(search_for != null || search_for != '')
+                        {
+                            $('#search_for_button').prop('disabled', false);
+                        }
+                    });
+                });
+            </script>

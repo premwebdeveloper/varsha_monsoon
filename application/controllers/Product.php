@@ -397,5 +397,37 @@ class Product extends MY_Controller {
         }
         echo json_encode($html);
     }
+	
+	// Search Products from the top of the website
+    public function search()
+    {
+        if($this->input->post())
+        {
+            $search_for = $this->input->post('search_for');
+			
+            $products = $this->Product_Model->searchProducts($search_for);
+
+            if(!empty($products))
+            {
+                foreach($products as $key => $product)
+                {
+                    $product_images = $this->Product_Model->getProductImagesByID($product['id']);
+					
+					$product += ['image' => $product_images[0]['image']];
+					unset($products[$key]);
+					$products[$key] = $product;
+                }
+            }
+            else
+            {
+                $products = array();
+            }
+			
+            $this->data['search_for'] = $search_for;
+            $this->data['products'] = $products;
+        }
+
+        $this->render('product/search_product');
+    }
 
 }

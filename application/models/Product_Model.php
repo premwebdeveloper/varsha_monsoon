@@ -41,167 +41,6 @@ class Product_Model extends CI_Model
         return $result;
     }
 
-    // Get food types like Pure ver or Non veg
-    public function getFoodType($type = null)
-    {
-        $this->db->select('*');
-
-        $this->db->from('food_types');
-
-        if(!is_null($type))
-        {
-            $this->db->where('id', $type);
-
-            $query = $this->db->get();
-
-            $result = $query->row_array();
-        }
-        else
-        {
-            $query = $this->db->get();
-
-            $result = $query->result_array();
-        }
-
-        return $result;
-    }
-
-    // Get food category
-    public function getFoodCategory($category = null)
-    {
-        $this->db->select('*');
-
-        $this->db->from('food_category');
-
-        if(!is_null($category))
-        {
-            $this->db->where('id', $category);
-
-            $query = $this->db->get();
-
-            $result = $query->row_array();
-        }
-        else
-        {
-            $this->db->where('status', '1');
-
-            $query = $this->db->get();
-
-            $result = $query->result_array();
-        }
-
-        return $result;
-    }
-
-    // Get Day Meals like Breakfast / Lunch / Dinner
-    public function getBreakfastLunchDinner()
-    {
-        $this->db->select('*');
-
-        $this->db->from('breakfast_lunch_dinner');
-
-        $query = $this->db->get();
-
-        $result = $query->result_array();
-
-        return $result;
-    }
-
-    // Get Week Days
-    public function week_days()
-    {
-        $this->db->select('*');
-
-        $this->db->from('weak_days');
-
-        $query = $this->db->get();
-
-        $result = $query->result_array();
-
-        return $result;
-    }
-
-    // Get Food Type form 'food_category' table
-    public function product_category()
-    {
-        $this->db->select('category.*, type.type');
-
-        $this->db->from('food_category category');
-
-        $this->db->join('food_types type', 'type.id = category.food_type');
-
-        $this->db->where('category.status', '1');
-
-        $query = $this->db->get();
-
-        $result = $query->result_array();
-        //echo $this->db->last_query();exit;
-
-        return $result;
-    }
-
-    // Get Product Availibility
-    public function product_availibility($product_id = null)
-    {
-        if(!is_null($product_id))
-        {
-            $this->db->select('*');
-
-            $this->db->from('product_available_on');
-
-            $this->db->where('product_id', $product_id);
-
-            $query = $this->db->get();
-
-            $result = $query->row_array();
-        }
-        else
-        {
-            $this->db->select('*');
-
-            $this->db->from('product_available_on');
-
-            $query = $this->db->get();
-
-            $result = $query->result_array();
-        }
-
-        //echo $this->db->last_query();exit;
-
-        return $result;
-    }
-
-    // Get products
-    public function getProducts($product_id = null)
-    {
-        if(!is_null($product_id))
-        {
-            $this->db->select('*');
-
-            $this->db->from('food_listings');
-
-            $this->db->where('id', $product_id);
-
-            $query = $this->db->get();
-
-            $result = $query->row_array();
-        }
-        else
-        {
-            $this->db->select('*');
-
-            $this->db->from('food_listings');
-
-            $query = $this->db->get();
-
-            $result = $query->result_array();
-        }
-
-        //echo $this->db->last_query();exit;
-
-        return $result;
-    }
-
     // Get products by product type
     public function getProductsByAll($type=null, $meal=null, $cat=null)
     {
@@ -270,5 +109,54 @@ class Product_Model extends CI_Model
 
         return true;
     }
+	
+	// Search products
+    public function searchProducts($search_for)
+    {
+        $this->db->select('prod.*, bra.brand, cat.category');
+
+        $this->db->from('products prod');
+
+        $this->db->join('brands bra', 'bra.id = prod.brand_id');
+        $this->db->join('categories cat', 'cat.id = prod.category_id');
+
+        $this->db->where('prod.status', 1);
+
+        $this->db->like('prod.name', $search_for);
+        $this->db->or_like('prod.sku_code', $search_for);
+        $this->db->or_like('prod.price1', $search_for);
+        $this->db->or_like('prod.price2', $search_for);
+        $this->db->or_like('bra.brand', $search_for);
+        $this->db->or_like('cat.category', $search_for);
+
+        $query = $this->db->get();
+
+        $result = $query->result_array();
+
+        //echo $this->db->last_query();exit;
+
+        return $result;
+    }
+	
+	# get product images
+	public function getProductImagesByID($product_id)
+	{
+		$this->db->select('*');
+
+        $this->db->from('product_images');
+
+		$where = array('product_id' => $product_id, 'status' => 1);
+		
+        $this->db->where($where);
+
+        $query = $this->db->get();
+
+        $result = $query->result_array();
+
+        //echo $this->db->last_query();exit;
+
+        return $result;
+	}
+	
 
 }

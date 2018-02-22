@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 22, 2018 at 10:51 AM
+-- Generation Time: Feb 22, 2018 at 11:30 AM
 -- Server version: 10.1.22-MariaDB
 -- PHP Version: 7.1.4
 
@@ -48,6 +48,7 @@ CREATE TABLE `ads` (
 CREATE TABLE `brands` (
   `id` int(11) NOT NULL,
   `brand` varchar(1000) NOT NULL,
+  `image` varchar(255) NOT NULL,
   `status` tinyint(1) NOT NULL DEFAULT '1'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -55,11 +56,13 @@ CREATE TABLE `brands` (
 -- Dumping data for table `brands`
 --
 
-INSERT INTO `brands` (`id`, `brand`, `status`) VALUES
-(1, 'aaa', 1),
-(2, 'bbb', 1),
-(3, 'ABC', 1),
-(4, 'XYZ', 1);
+INSERT INTO `brands` (`id`, `brand`, `image`, `status`) VALUES
+(1, 'aaa', '', 0),
+(2, 'bbb', '', 1),
+(3, 'ABC', '', 1),
+(4, 'XYZ', '', 1),
+(5, 'Adidas', '2000px-Adidas_Logo1.jpg', 1),
+(6, 'Nike', 'Old_Nike_logo2.jpg', 1);
 
 -- --------------------------------------------------------
 
@@ -424,7 +427,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `ip_address`, `username`, `password`, `salt`, `email`, `activation_code`, `forgotten_password_code`, `forgotten_password_time`, `remember_code`, `created_on`, `last_login`, `verify_token`, `email_otp`, `mobile_otp`, `active`, `first_name`, `last_name`, `company`, `phone`) VALUES
-(1, '127.0.0.1', 'administrator', '$2y$08$k3qsZ9bkIpmTk4Dfx2LiDevEVfHDiw5FAE4DS.uVWVbWHCvml8oN6', '', 'admin@admin.com', '', NULL, NULL, NULL, 1268889823, 1519290533, NULL, NULL, NULL, 1, 'Admin', 'istrator', 'ADMIN', '9602947878');
+(1, '127.0.0.1', 'administrator', '$2y$08$k3qsZ9bkIpmTk4Dfx2LiDevEVfHDiw5FAE4DS.uVWVbWHCvml8oN6', '', 'admin@admin.com', '', NULL, NULL, NULL, 1268889823, 1519294055, NULL, NULL, NULL, 1, 'Admin', 'istrator', 'ADMIN', '9602947878');
 
 -- --------------------------------------------------------
 
@@ -676,7 +679,7 @@ ALTER TABLE `ads`
 -- AUTO_INCREMENT for table `brands`
 --
 ALTER TABLE `brands`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 --
 -- AUTO_INCREMENT for table `breakfast_lunch_dinner`
 --

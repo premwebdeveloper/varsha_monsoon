@@ -16,7 +16,8 @@
         <script src="<?= base_url(); ?>frontend_assets/js/jquery-ui.min.js"></script>
 
         <!-- Get Current Loaction from Google API -->
-        <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true"></script>
+        <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDoODDUkz54ybuGh3sBzsYJOevmG9tmLy0&callback=initMap"></script>  
+        <script src="<?= base_url(); ?>assets/js/bootstrap-confirmation.min.js"></script>
 
         <!-- Jquery Scripts -->
         <?php $this->load->view('templates/_parts/public_app_scripts'); ?>

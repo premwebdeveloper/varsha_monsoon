@@ -7,8 +7,9 @@ class Product extends MY_Controller {
     {
         parent::__construct();
         $this->load->Model("Product_Model");
-        $this->load->model('Food_Listing_Model');
+        $this->load->model('Categories_Model');
         $this->load->model('Products_Model');
+        $this->load->model('Brands_Model');
         $this->load->library('Ajax_pagination');
         $this->perPage = 4;
     }
@@ -289,22 +290,22 @@ class Product extends MY_Controller {
     //Single Food View on User
     public function view()
     {
-        $this->data['food_list_id'] = $food_id = $this->uri->segment(3);
+        $this->data['product_id'] = $product_id = $this->uri->segment(3);
 
         //Get Type
-        $this->data['type'] = $type = $this->Product_Model->getFoodType();
+        $this->data['brand'] = $brand = $this->Brands_Model->index();
 
         //Get Days Meal
         $this->data['day_meals'] = $day_meals = $this->Product_Model->getBreakfastLunchDinner();
 
         //Get Food Details
-        $this->data['food_detail'] = $food_detail = $this->Food_Listing_Model->Food_Details($food_id);
+        $this->data['product'] = $product = $this->Product_Model->index($product_id);
 
         //Get Category
-        $this->data['food_category'] = $food_category = $this->Food_Listing_Model->get_food_category();
+        $this->data['categories'] = $categories = $this->Categories_Model->index();
 
         //Get Food Image
-        $this->data['food_image'] = $food_image = $this->Food_Listing_Model->Food_Listing_Images($food_id);
+        $this->data['food_image'] = $food_image = $this->Products_Model->getProductImages($food_id);
 
         // Add breadcrumbs
         $this->breadcrumbs->push('Home', '/');
@@ -314,39 +315,6 @@ class Product extends MY_Controller {
         $this->data['page_description'] = 'View';
 
         $this->render('product/view');
-    }
-
-    //Get Food Data for Pop-up on Home Page(Script Data)
-    public function food_view()
-    {
-       $id = $this->input->post("id");
-       $food_detail = $this->Food_Listing_Model->Food_Details($id);
-       echo json_encode($food_detail);
-    }
-
-    //Get Food Images for Pop-up on Home Page(Script Data)
-    public function food_images()
-    {
-       $id = $this->input->post("id");
-       $food_image = $this->Food_Listing_Model->Food_Listing_Images($id);
-       echo json_encode($food_image);
-    }
-
-    //Change Delivery Status
-    public function delivery()
-    {
-        $data = $this->input->post("data");
-
-        //Get UserId
-        $user_id = $this->access->get_user_id();
-
-        //Change delivery status
-        $change = $this->Product_Model->delivery($user_id, $data);
-
-        if($change)
-        {
-            echo "1";
-        }
     }
 
     //Get Product for Ajax in Home page

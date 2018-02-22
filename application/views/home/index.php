@@ -45,7 +45,7 @@
 								<a class="button style-2" href="#">shop now</a>
 							</div>
 							<div class="mozaic-banner-content p0">
-								<img src="<?= base_url(); ?>frontend_assets/img/<?= $ad['image']; ?>" class="p10" style="width: 100%; height: 238px;">
+								<img src="<?= base_url(); ?>frontend_assets/img/<?= $ad['image']; ?>" class="p10" style="width: 100%; height: 248px;">
 							</div>
 						</div>
 					</div>

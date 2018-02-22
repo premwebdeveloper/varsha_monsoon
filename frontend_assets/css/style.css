@@ -755,11 +755,11 @@ footer{position: relative;}
 }
 
 /* 04.05 - sales blocks */
-.sale-entry{overflow: hidden; border: 2px #f2f2f2 solid; min-height: 70px; padding: 35px 0; position: relative; display: block;}
-.sale-entry .sale-price{font-size: 16px; line-height: 24px; color: #2e2e2e; text-transform: uppercase; font-weight: 700; width: 190px; text-align: center; border-right: 1px #f2f2f2 solid; float: left; display: block; position: relative; z-index: 1;}
+.sale-entry{overflow: hidden; border: 2px #f2f2f2 solid; min-height: 70px; padding: 0px 0; position: relative; display: block;}
+.sale-entry .sale-price{font-size: 16px; line-height: 24px; color: #2e2e2e; text-transform: uppercase; font-weight: 700; text-align: center; border-right: 1px #f2f2f2 solid; float: left; display: block; position: relative; z-index: 1;}
 .sale-entry .sale-price span{display: block; font-size: 48px; line-height: 48px; color: #da75cb;}
-.sale-entry .sale-price img{padding: 15px 0;}
-.sale-entry .sale-description{font-size: 13px; line-height: 22px; color: #a3a2a2; margin: 0 40px 15px 230px; padding: 2px 0; display: block; position: relative; z-index: 1;}
+.sale-entry .sale-price img{padding: 0px 0;}
+.sale-entry .sale-description{font-size: 13px; line-height: 22px; color: #a3a2a2; margin: 0 40px 15px 230px; display: block; position: relative; z-index: 1;}
 .sale-entry .sale-title{font-size: 18px; line-height: 24px; text-transform: uppercase; font-weight: 700; color: #a3a2a2; margin: 0 0 10px 230px;}
 .hot-mark{position: absolute; top: 5px; right: -15px; font-size: 11px; font-weight: 700; color: #fff; text-transform: uppercase; background: #0f51a3; line-height: 18px; width: 60px; text-align: center; transform: rotate(45deg); -moz-transform: rotate(45deg); -webkit-transform: rotate(45deg); -ms-transform: rotate(45deg);}
 .hot-mark.blue{background: #0F51A3;}

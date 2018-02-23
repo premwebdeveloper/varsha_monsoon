@@ -42,7 +42,6 @@
 								<h3 class="subtitle"><?= $ad['title']; ?></h3>
 								<h2 class="title">₹<?= $ad['price']; ?></h2>
 								<div class="description"><?= $ad['description']; ?></div>
-								<a class="button style-2" href="#">shop now</a>
 							</div>
 							<div class="mozaic-banner-content p0">
 								<img src="<?= base_url(); ?>frontend_assets/img/<?= $ad['image']; ?>" class="p10" style="width: 100%; height: 248px;">

@@ -290,6 +290,13 @@ class Product extends MY_Controller {
     //Single Food View on User
     public function view()
     {
+		 // Add breadcrumbs
+        $this->breadcrumbs->push('Home', '/');
+        $this->breadcrumbs->push('Products', 'Product');
+        $this->breadcrumbs->push('View', 'Product/view');
+
+        $this->data['page_description'] = 'View';
+		
         $this->data['product_id'] = $product_id = $this->uri->segment(3);
 
         //Get Type
@@ -303,13 +310,79 @@ class Product extends MY_Controller {
 
         //Get Food Image
         $this->data['product_image'] = $product_image = $this->Products_Model->getProductImages($product_id);
+		
+		# If Any user order for some product
+		if($this->input->post())
+        {
+            $this->form_validation->set_rules('name', 'Name', 'required|trim');
+            $this->form_validation->set_rules('email', 'Email', 'required|trim|valid_email');
+            $this->form_validation->set_rules('phone', 'Phone', 'required|trim|min_length[10]|max_length[10]');
+            $this->form_validation->set_rules('address', 'Address', 'required|trim');
+            $this->form_validation->set_rules('city', 'City', 'required|trim');
+            $this->form_validation->set_rules('state', 'State', 'required|trim');
+            $this->form_validation->set_rules('country', 'Country', 'required|trim');
+            $this->form_validation->set_rules('zipcode', 'Zip Code', 'required|trim');
+            $this->form_validation->set_rules('quantity', 'Quantity', 'required|trim');
 
-        // Add breadcrumbs
-        $this->breadcrumbs->push('Home', '/');
-        $this->breadcrumbs->push('Products', 'Product');
-        $this->breadcrumbs->push('View', 'Product/view');
+            $order = array();
+			
+			$order['product_id']   = $product_id = $this->input->post('product_id');
 
-        $this->data['page_description'] = 'View';
+            if($this->form_validation->run() === true)
+            {                
+                $order['name']     = $name = $this->input->post('name');
+                $order['email']    = $email = $this->input->post('email');
+                $order['phone']    = $phone = $this->input->post('phone');
+                $order['address']  = $address = $this->input->post('address');
+                $order['city']     = $city = $this->input->post('city');
+                $order['state']    = $state = $this->input->post('state');
+                $order['country']  = $country = $this->input->post('country');
+                $order['zipcode']  = $zip = $this->input->post('zipcode');
+                $order['quantity'] = $quantity = $this->input->post('quantity');
+
+                // Add new address
+                $order = $this->Product_Model->order_now($order);
+				
+				# Send email to administrator for order deatails to this order
+				//Send mail to Admin 
+                $msg = 'Dear Sir,							
+                            I want to purchase this product with quantity '.$quantity.'.
+                            Name     : - '.$name.' 
+                            Email Id : - '.$email.' 
+                            Phone No : - '.$phone.'
+                            Address  : - '.$address.', '.$city.', '.$state.', '.$country.'- '.$zip.'
+                            Thank You.
+                    ';
+
+                $this->load->library('email');
+
+                $this->email->from('premtundwal@gmail.com', 'Prem Tundwal');
+                $this->email->to('premsaini9602@gmail.com');
+
+                $this->email->subject('Product Order');
+                $this->email->message($msg);
+
+                if (!$this->email->send()) 
+                {
+                    $errors = $this->email->print_debugger();
+                }
+
+				# If order submitted successfully then show success message.
+                if($order)
+                {
+                    $this->session->set_flashdata('order_success', 'Ordered product successfully.');
+                }
+                else
+                {
+                    $this->session->set_flashdata('order_success', 'Something went wrong.');
+                }
+                redirect('product/view/'.$product_id.'');
+            }
+			else
+			{	
+				$this->data['order_error'] = true;
+			}
+        }
 
         $this->render('product/view');
     }
@@ -429,5 +502,80 @@ class Product extends MY_Controller {
 
         $this->render('product/search_product');
     }
+	
+	# Order Product
+	public function order_now()
+	{
+		if($this->input->post())
+        {
+            $this->form_validation->set_rules('name', 'Name', 'required|trim');
+            $this->form_validation->set_rules('email', 'Email', 'required|trim|valid_email');
+            $this->form_validation->set_rules('phone', 'Phone', 'required|trim|min_length[10]|max_length[10]');
+            $this->form_validation->set_rules('address', 'Address', 'required|trim');
+            $this->form_validation->set_rules('city', 'City', 'required|trim');
+            $this->form_validation->set_rules('state', 'State', 'required|trim');
+            $this->form_validation->set_rules('country', 'Country', 'required|trim');
+            $this->form_validation->set_rules('zipcode', 'Zip Code', 'required|trim');
+            $this->form_validation->set_rules('quantity', 'Quantity', 'required|trim');
+
+            $order = array();
+			
+			$order['product_id']   = $product_id = $this->input->post('product_id');
+
+            if($this->form_validation->run() === true)
+            {                
+                $order['name']     = $name = $this->input->post('name');
+                $order['email']    = $email = $this->input->post('email');
+                $order['phone']    = $phone = $this->input->post('phone');
+                $order['address']  = $new_address = $this->input->post('address');
+                $order['city']     = $city = $this->input->post('city');
+                $order['state']    = $state = $this->input->post('state');
+                $order['country']  = $country = $this->input->post('country');
+                $order['zipcode']      = $zip = $this->input->post('zipcode');
+                $order['quantity'] = $quantity = $this->input->post('quantity');
+
+                // Add new address
+                $order = $this->Product_Model->order_now($order);
+
+                if($order)
+                {
+                    $this->session->set_flashdata('order_success', 'Ordered product successfully.');
+                }
+                else
+                {
+                    $this->session->set_flashdata('order_success', 'Something went wrong.');
+                }
+                redirect('product/view/'.$product_id.'');
+            }
+			else
+			{
+				// Add breadcrumbs
+				$this->breadcrumbs->push('Home', '/');
+				$this->breadcrumbs->push('Products', 'Product');
+				$this->breadcrumbs->push('View', 'Product/view');
+
+				$this->data['page_description'] = 'View';
+				
+				$this->data['product_id'] = $product_id;
+
+				//Get Type
+				$this->data['brand'] = $brand = $this->Brands_Model->index();
+
+				//Get Food Details
+				$this->data['product'] = $product = $this->Product_Model->index($product_id);
+
+				//Get Category
+				$this->data['categories'] = $categories = $this->Categories_Model->index();
+
+				//Get Food Image
+				$this->data['product_image'] = $product_image = $this->Products_Model->getProductImages($product_id);
+				
+				$this->data['order_error'] = true;
+		
+				$this->render('product/view');
+			}
+        }
+		redirect('product/view/');
+	}
 
 }

@@ -158,5 +158,35 @@ class Product_Model extends CI_Model
         return $result;
 	}
 	
+	# Order now
+	public function order_now($order)
+	{
+		$date = date('Y-m-d H:i:s');
 
+        $this->db->trans_start();
+
+		$data = array(
+			'product_id'      => $order['product_id'],
+			'name'            => $order['name'],
+			'email'           => $order['email'],
+			'phone'           => $order['phone'],
+			'address'         => $order['address'],
+			'city'            => $order['city'],
+			'state'           => $order['state'],
+			'country'         => $order['country'],
+			'zipcode'         => $order['zipcode'],
+			'quantity'        => $order['quantity'],
+			'created_on'      => $date,
+			'updated_on'      => $date,
+			'status'          => 1,			
+		);
+
+		$this->db->insert('orders', $data);
+
+		//echo $this->db->last_query(); exit;
+
+        $this->db->trans_complete();
+
+        return true;
+	}
 }

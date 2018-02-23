@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 22, 2018 at 05:52 PM
+-- Generation Time: Feb 23, 2018 at 02:57 PM
 -- Server version: 10.1.10-MariaDB
 -- PHP Version: 5.6.15
 
@@ -126,6 +126,37 @@ CREATE TABLE `login_attempts` (
   `login` varchar(100) NOT NULL,
   `time` int(11) UNSIGNED DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `orders`
+--
+
+CREATE TABLE `orders` (
+  `id` int(11) NOT NULL,
+  `product_id` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `phone` varchar(15) NOT NULL,
+  `address` text NOT NULL,
+  `city` varchar(255) NOT NULL,
+  `state` varchar(255) NOT NULL,
+  `country` varchar(255) NOT NULL,
+  `zipcode` varchar(10) NOT NULL,
+  `quantity` varchar(255) NOT NULL,
+  `created_on` datetime NOT NULL,
+  `updated_on` datetime NOT NULL,
+  `status` tinyint(1) NOT NULL DEFAULT '1'
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `orders`
+--
+
+INSERT INTO `orders` (`id`, `product_id`, `name`, `email`, `phone`, `address`, `city`, `state`, `country`, `zipcode`, `quantity`, `created_on`, `updated_on`, `status`) VALUES
+(4, 6, 'Ravi', 'ravi@gmail.com', '9685748525', 'address', 'City', 'state', 'india', '302039', '2', '2018-02-23 14:42:34', '2018-02-23 14:42:34', 1),
+(5, 6, 'Prem Saini', 'prem@gmail.com', '9602947878', 'Vidhyadhar nagar', 'Jaipur', 'Rajasthan', 'India', '332012', 'Five', '2018-02-23 14:52:04', '2018-02-23 14:52:04', 1);
 
 -- --------------------------------------------------------
 
@@ -264,7 +295,8 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `ip_address`, `username`, `password`, `salt`, `email`, `activation_code`, `forgotten_password_code`, `forgotten_password_time`, `remember_code`, `created_on`, `last_login`, `verify_token`, `email_otp`, `mobile_otp`, `active`, `first_name`, `last_name`, `company`, `phone`) VALUES
-(1, '127.0.0.1', 'administrator', '$2y$08$k3qsZ9bkIpmTk4Dfx2LiDevEVfHDiw5FAE4DS.uVWVbWHCvml8oN6', '', 'admin@admin.com', '', NULL, NULL, NULL, 1268889823, 1519300167, NULL, NULL, NULL, 1, 'Admin', 'istrator', 'ADMIN', '9602947878');
+(1, '127.0.0.1', 'administrator', '$2y$08$k3qsZ9bkIpmTk4Dfx2LiDevEVfHDiw5FAE4DS.uVWVbWHCvml8oN6', '', 'admin@admin.com', '', NULL, NULL, NULL, 1268889823, 1519377990, NULL, NULL, NULL, 1, 'Admin', 'istrator', 'ADMIN', '9602947878'),
+(2, '127.0.0.1', 'premtundwal@gmail.com', '$2y$08$1nlqOob0Ls0lH9.lfnGhiubilWYvNg2LyuCSFhcojl/bL7y3Y6HiO', NULL, 'premtundwal@gmail.com', NULL, NULL, NULL, NULL, 1519377856, 1519377920, 'vNRVkZjIptFA9rg6LOHem3WMEyx7bqnG0UKP5BQT', NULL, NULL, 1, 'Prem', 'Saini', NULL, '8005609866');
 
 -- --------------------------------------------------------
 
@@ -284,7 +316,8 @@ CREATE TABLE `users_groups` (
 
 INSERT INTO `users_groups` (`id`, `user_id`, `group_id`) VALUES
 (1, 1, 1),
-(2, 1, 2);
+(2, 1, 2),
+(3, 2, 2);
 
 -- --------------------------------------------------------
 
@@ -347,6 +380,13 @@ CREATE TABLE `user_details` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
+-- Dumping data for table `user_details`
+--
+
+INSERT INTO `user_details` (`id`, `user_id`, `fname`, `lname`, `email`, `gender`, `address`, `city`, `state`, `country`, `zipcode`, `phone`, `dob`, `image`, `bio`, `created_on`, `updated_on`, `status`) VALUES
+(1, 2, 'Prem', 'Saini', 'premtundwal@gmail.com', 'Male', '', '', '', '', '', '8005609866', '2018-02-24', '', NULL, '2018-02-23 00:00:00', '2018-02-23 00:00:00', 1);
+
+--
 -- Indexes for dumped tables
 --
 
@@ -378,6 +418,12 @@ ALTER TABLE `groups`
 -- Indexes for table `login_attempts`
 --
 ALTER TABLE `login_attempts`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `orders`
+--
+ALTER TABLE `orders`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -461,6 +507,11 @@ ALTER TABLE `groups`
 ALTER TABLE `login_attempts`
   MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
 --
+-- AUTO_INCREMENT for table `orders`
+--
+ALTER TABLE `orders`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+--
 -- AUTO_INCREMENT for table `products`
 --
 ALTER TABLE `products`
@@ -484,12 +535,12 @@ ALTER TABLE `sub_categories`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT for table `users_groups`
 --
 ALTER TABLE `users_groups`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT for table `user_addresses`
 --
@@ -499,7 +550,7 @@ ALTER TABLE `user_addresses`
 -- AUTO_INCREMENT for table `user_details`
 --
 ALTER TABLE `user_details`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- Constraints for dumped tables
 --

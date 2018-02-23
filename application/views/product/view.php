@@ -1,4 +1,27 @@
 <?= $this->breadcrumbs->show(); ?>
+
+<?php   # If the session message is set then print message
+if(!is_null($this->session->flashdata('order_success')))
+{
+	?>
+	<div class="alert alert-success alert-dismissable">
+		<button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
+	<?= $this->session->flashdata('order_success'); ?>
+	</div>
+	<?php
+}
+if(isset($order_error))
+{
+	?>
+	<script>
+	$(document).ready(function(){
+		$("#orderNowModal").modal('show');
+	});
+	</script>
+	<?php
+}
+?>
+					
 <div class="information-blocks">
     <div class="row">
         <div class="col-sm-6 information-entry">
@@ -103,7 +126,7 @@
                 </div>
 
                 <div class="col-md-6 col-xs-6 pb10">
-                    <button type="submit" class="button btn-yellow">
+                    <button type="button" class="button btn-yellow" data-toggle="modal" data-target="#orderNowModal">
                         <i class="fa fa-shopping-cart"></i> Order Now
                     </button>
                 </div>               
@@ -178,4 +201,103 @@
             <hr>
         </div>
     </div>
+</div>
+
+<!-- Order now Modal -->
+<div id="orderNowModal" class="modal fade" role="dialog">
+	<div class="modal-dialog">
+
+		<!-- Modal content-->
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<h4 class="modal-title">Order Product</h4>
+			</div>
+			<div class="modal-body">
+				<p>
+					<?= form_open('Product/view/'.$product['id'].'', array('class'=>'', 'role'=>'form')); ?>
+					
+						<input type="hidden" name="product_id" value="<?= $product['id']; ?>">
+						
+						<div class="row">
+							<div class="col-md-6 mb10">
+								<div class="form-group">
+									<?= form_input('name', set_value('name'), array('class' => 'form-control', 'placeholder' => 'Full Name', 'required' => 'required', 'id' => 'order_name')); ?>
+									<span class="red"><?= form_error('name'); ?></span>
+								</div>
+							</div>
+							<div class="col-md-6 mb10"> 
+								<div class="form-group">
+									<?= form_input('email', set_value('email'), array('class' => 'form-control',  'placeholder' => 'Email', 'required' => 'required', 'id' => 'order_email')); ?>
+									<span class="red"><?= form_error('email'); ?></span>
+								</div>
+							</div>
+							<div class="col-md-6 mb10"> 
+								<div class="form-group">
+									<?= form_input('phone', set_value('phone'), array('class' => 'form-control', 'placeholder' => 'Phone', 'required' => 'required', 'id' => 'order_phone')); ?>
+									<span class="red"><?= form_error('phone'); ?></span>
+								</div>
+							</div>
+							<div class="col-md-6 mb10"> 
+								<div class="form-group">
+									<?= form_input('address', set_value('address'), array('class' => 'form-control', 'placeholder' => 'Address', 'required' => 'required', 'id' => 'order_address')); ?>
+									<span class="red"><?= form_error('address'); ?></span>
+								</div>
+							</div>
+							<div class="col-md-6 mb10"> 
+								<div class="form-group">
+									<?= form_input('city', set_value('city'), array('class' => 'form-control', 'placeholder' => 'City', 'required' => 'required', 'id' => 'order_city')); ?>
+									<span class="red"><?= form_error('city'); ?></span>
+								</div>
+							</div>
+							<div class="col-md-6 mb10"> 
+								<div class="form-group">
+									<?= form_input('state', set_value('state'), array('class' => 'form-control', 'placeholder' => 'State', 'required' => 'required', 'id' => 'order_state')); ?>
+									<span class="red"><?= form_error('state'); ?></span>
+								</div>
+							</div>
+							<div class="col-md-6 mb10"> 
+								<div class="form-group">
+									<?= form_input('country', set_value('country'), array('class' => 'form-control', 'placeholder' => 'Country', 'required' => 'required', 'id' => 'order_country')); ?>
+									<span class="red"><?= form_error('country'); ?></span>
+								</div>
+							</div>
+							<div class="col-md-6 mb10"> 
+								<div class="form-group">
+									<?= form_input('zipcode', set_value('zipcode'), array('class' => 'form-control', 'placeholder' => 'Zipcode', 'required' => 'required', 'id' => 'order_zipcode')); ?>
+									<span class="red"><?= form_error('zipcode'); ?></span>
+								</div>
+							</div>
+							<div class="col-md-6 mb10"> 
+								<div class="form-group">
+									<?= form_input('quantity', set_value('quantity'), array('class' => 'form-control', 'placeholder' => 'Quantity', 'required' => 'required', 'id' => 'order_quantity')); ?>
+									<span class="red"><?= form_error('quantity'); ?></span>
+								</div>
+							</div>
+							<div class="col-md-12 text-right"> 
+								<div class="form-group">
+									<?php
+									$button = array(
+										'type' => 'submit',
+										'name' => 'order_now',
+										'id' => 'order_now',
+										'class' => 'btn btn-info',
+										'value' => 'Order',
+									);
+									
+									echo form_submit($button);
+									?>
+								</div>
+							</div>
+													
+						<?= form_close(); ?>
+					</div>
+				</p>
+			</div>
+			<div class="modal-footer">
+				&nbsp;
+			</div>
+		</div>
+
+	</div>
 </div>

@@ -492,4 +492,15 @@ Class Admin_Pages extends Auth_Controller
 
         $this->render('admin_pages/edit_ads');
     }
+	
+	# Get all orders and show in admin console	
+    public function orders()
+    {
+        $this->breadcrumbs->push('Home', 'Dashboard');
+        $this->breadcrumbs->push('Orders', 'Admin_Pages/orders');
+
+        $this->data['orders'] = $orders = $this->Admin_Pages_Model->orders();
+		
+        $this->render('admin_pages/orders');    
+	}
 }

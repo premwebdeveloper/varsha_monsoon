@@ -261,5 +261,20 @@ Class Admin_Pages_Model extends CI_Model
 
         return true;
     }
+	
+	//Get Home Page Slider Images
+    public function orders()
+    {
+		$this->db->select('ord.*, prod.name product_name, prod.sku_code');
+		$this->db->from('orders ord');
+		$this->db->join('products prod', 'prod.id = ord.product_id');
+		
+		$where = array('ord.status' => 1);
+		
+		$this->db->where($where);
+        $query = $this->db->get();
+        $result = $query->result_array();
+        return $result;
+    }
 
 }

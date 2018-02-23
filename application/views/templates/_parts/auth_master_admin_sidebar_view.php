@@ -70,6 +70,12 @@
 				</a>
 			</li>
 
+			<li>
+				<a href="<?= site_url('Admin_Pages/orders'); ?>"><i class="fa fa-outdent"></i>
+					<span class="nav-label">Orders</span>
+				</a>
+			</li>
+
 			<!--<li>
 				<a href="<?= site_url('Food_Listings'); ?>"><i class="fa fa-bars"></i>
 					<span class="nav-label">Food Listings</span>
